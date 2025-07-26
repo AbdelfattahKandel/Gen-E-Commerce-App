@@ -8,13 +8,18 @@
         routerLink="/"
         routerLinkActive="active"
         [routerLinkActiveOptions]="{ exact: true }"
+        class="nav-icon-btn"
+        title="Home"
       >
         <i class="fa-solid fa-house"></i>
-        Home
       </a>
-      <a routerLink="/products" routerLinkActive="active">
+      <a
+        routerLink="/products"
+        routerLinkActive="active"
+        class="nav-icon-btn"
+        title="Products"
+      >
         <i class="fa-solid fa-store"></i>
-        Products
       </a>
 
       <!-- Search Bar -->
@@ -60,18 +65,23 @@
         </div>
       </div>
 
-
       <a
         *ngIf="isAuthenticated()"
         routerLink="/dashboard"
         routerLinkActive="active"
+        class="nav-icon-btn"
+        title="Dashboard"
       >
         <i class="fa-solid fa-user"></i>
-        Dashboard
       </a>
-      <a *ngIf="isAdmin()" routerLink="/admin" routerLinkActive="active">
+      <a
+        *ngIf="isAdmin()"
+        routerLink="/admin"
+        routerLinkActive="active"
+        class="nav-icon-btn"
+        title="Admin Panel"
+      >
         <i class="fa-solid fa-crown"></i>
-        Admin
       </a>
     </nav>
     <div class="header-actions">
