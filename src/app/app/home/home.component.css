@@ -27,9 +27,18 @@
 .spinner-container {
   min-height: 60vh;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   background: transparent;
+  gap: 1rem;
+}
+.spinner-container p {
+  color: var(--primary, #2563eb);
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin: 0;
+  opacity: 0.8;
 }
 .spinner {
   width: 3rem;
@@ -44,6 +53,47 @@
   to {
     transform: rotate(360deg);
   }
+}
+.error-container {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+}
+.error-content {
+  text-align: center;
+  max-width: 400px;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 1rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e7ff;
+}
+.error-content i {
+  font-size: 3rem;
+  color: #ef4444;
+  margin-bottom: 1rem;
+}
+.error-content h3 {
+  color: #1f2937;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+.error-content p {
+  color: #6b7280;
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+.error-content .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
 }
 .hero {
   background: linear-gradient(135deg, #e0e7ff 0%, #f9fafb 100%);
@@ -367,6 +417,20 @@
       #18181b 70%,
       #101014 100%
     );
+  }
+  .spinner-container p {
+    color: #90b4fa;
+  }
+  .error-content {
+    background: rgba(35, 39, 47, 0.9);
+    border: 1px solid #232c3b;
+    color: #f3f4f6;
+  }
+  .error-content h3 {
+    color: #f3f4f6;
+  }
+  .error-content p {
+    color: #bdbdbd;
   }
   .hero {
     background: linear-gradient(135deg, #23272f 0%, #18181b 100%);

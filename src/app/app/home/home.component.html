@@ -1,8 +1,25 @@
 <div class="home-root">
   <div *ngIf="loading" class="spinner-container">
     <div class="spinner"></div>
+    <p>Loading amazing products...</p>
   </div>
-  <div *ngIf="!loading" class="fade-in">
+
+  <div *ngIf="error && !loading" class="error-container">
+    <div class="error-content">
+      <i class="fa-solid fa-exclamation-triangle"></i>
+      <h3>Oops! Something went wrong</h3>
+      <p>
+        We couldn't load the products. Please check your internet connection and
+        try again.
+      </p>
+      <button (click)="retryLoad()" class="btn btn-primary">
+        <i class="fa-solid fa-refresh"></i>
+        Try Again
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && !error" class="fade-in">
     <section class="hero">
       <div class="hero-visual">
         <i class="fa-solid fa-bag-shopping"></i>
