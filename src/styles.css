@@ -381,8 +381,8 @@ textarea:focus + label {
 }
 button:not([disabled]):focus,
 a:focus {
-  outline: 2px solid #2563eb;
-  outline-offset: 2px;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.3);
 }
 img[alt=""] {
   border: 2px dashed #d1d5db;

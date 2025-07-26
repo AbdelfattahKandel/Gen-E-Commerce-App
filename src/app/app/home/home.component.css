@@ -297,6 +297,8 @@
 .product-cta:focus {
   color: #1741a6;
   transform: scale(1.18);
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.3);
 }
 .footer-global {
   width: 100%;
@@ -483,9 +485,11 @@
     box-shadow: none;
   }
   .product-cta:hover,
-  .product-cta:focus {
-    color: #2563eb;
-  }
+.product-cta:focus {
+  color: #2563eb;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(144, 180, 250, 0.4);
+}
   .section-divider,
   .footer-global {
     border-color: #23272f;
