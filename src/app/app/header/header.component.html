@@ -60,13 +60,7 @@
         </div>
       </div>
 
-      <a routerLink="/cart" routerLinkActive="active">
-        <i class="fa-solid fa-cart-shopping"></i>
-        Cart
-        <span *ngIf="cartItemCount > 0" class="cart-count">{{
-          cartItemCount
-        }}</span>
-      </a>
+
       <a
         *ngIf="isAuthenticated()"
         routerLink="/dashboard"

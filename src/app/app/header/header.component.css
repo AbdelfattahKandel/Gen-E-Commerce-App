@@ -35,6 +35,8 @@
   align-items: center;
   justify-content: space-between;
   padding: 1rem 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 .brand .logo {
   font-size: 2rem;
@@ -44,7 +46,9 @@
 }
 .nav-desktop {
   display: flex;
-  gap: 2rem;
+  gap: 1.5rem;
+  align-items: center;
+  flex-wrap: wrap;
 }
 .nav-desktop a {
   color: #222;
@@ -532,12 +536,28 @@
   vertical-align: middle;
   transition: color 0.18s;
 }
-@media (max-width: 900px) {
+@media (max-width: 1200px) {
   .container.header-content {
-    padding: 1rem 0.7rem;
+    padding: 1rem;
   }
   .nav-desktop {
-    gap: 1.1rem;
+    gap: 1rem;
+  }
+  .search-container {
+    min-width: 200px;
+  }
+}
+
+@media (max-width: 900px) {
+  .container.header-content {
+    padding: 0.75rem;
+  }
+  .nav-desktop {
+    gap: 0.75rem;
+  }
+  .search-container {
+    min-width: 180px;
+    max-width: 300px;
   }
 }
 @media (max-width: 768px) {
@@ -656,7 +676,9 @@
 /* Search Bar Styles */
 .search-container {
   position: relative;
-  min-width: 300px;
+  min-width: 250px;
+  max-width: 400px;
+  flex: 1;
 }
 
 .search-box {
@@ -776,33 +798,33 @@
     background: rgba(35, 39, 47, 0.3);
     border: 1px solid rgba(255, 255, 255, 0.1);
   }
-  
+
   .search-box:focus-within {
     background: rgba(35, 39, 47, 0.5);
     border-color: var(--primary, #90b4fa);
   }
-  
+
   .search-input::placeholder {
     color: rgba(255, 255, 255, 0.4);
   }
-  
+
   .search-results {
     background: rgba(35, 39, 47, 0.95);
     border: 1px solid rgba(255, 255, 255, 0.1);
   }
-  
+
   .search-result-item {
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   }
-  
+
   .search-result-item:hover {
     background: rgba(144, 180, 250, 0.1);
   }
-  
+
   .search-result-title {
     color: #f3f4f6;
   }
-  
+
   .search-result-price {
     color: var(--primary, #90b4fa);
   }
@@ -812,7 +834,7 @@
   .search-container {
     min-width: 200px;
   }
-  
+
   .search-results {
     max-height: 300px;
   }
