@@ -1,0 +1,66 @@
+<div class="home-root">
+  <div *ngIf="loading" class="spinner-container">
+    <div class="spinner"></div>
+  </div>
+  <div *ngIf="!loading" class="fade-in">
+    <section class="hero">
+      <div class="hero-visual">
+        <i class="fa-solid fa-bag-shopping"></i>
+      </div>
+      <h1>Discover Next-Gen Shopping</h1>
+      <p>
+        Shop smarter, faster, and easier with GenCommerce. Explore trending
+        products, enjoy seamless checkout, and experience a new era of online
+        shopping.
+      </p>
+      <div class="hero-actions">
+        <a routerLink="/products" class="btn btn-primary btn-lg"
+          >Start Shopping</a
+        >
+        <a routerLink="/about" class="btn btn-outline btn-lg"
+          >Why GenCommerce?</a
+        >
+      </div>
+    </section>
+    <div class="section-divider"></div>
+    <section class="featured-products container">
+      <h2>Featured Products</h2>
+      <div class="products-grid">
+        <div
+          *ngFor="let product of featuredProducts; let i = index"
+          class="product-card"
+          [style.animationDelay]="0.12 * i + 's'"
+        >
+          <div class="product-img-wrap">
+            <img
+              [src]="product.image"
+              [alt]="product.title"
+              class="product-img"
+            />
+            <span *ngIf="getProductBadge(product)" class="product-badge">{{
+              getProductBadge(product)
+            }}</span>
+          </div>
+          <div class="product-info">
+            <div class="product-title">{{ product.title }}</div>
+            <div class="product-desc">
+              {{ product.description | slice : 0 : 60 }}...
+            </div>
+            <div class="product-price">${{ product.price }}</div>
+            <div class="product-rating">
+              <i class="fa-solid fa-star"></i>
+              {{ product.rating.rate }} ({{ product.rating.count }})
+            </div>
+          </div>
+          <a
+            [routerLink]="['/product', product.id]"
+            class="product-cta"
+            title="View Product"
+          >
+            <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

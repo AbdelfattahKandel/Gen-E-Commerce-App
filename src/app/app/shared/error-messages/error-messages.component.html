@@ -1,0 +1,15 @@
+<div class="error-messages-container">
+  <div
+    *ngFor="let error of errors"
+    class="error-message-wrapper"
+    [ngClass]="getErrorClass(error.type)"
+  >
+    <div class="error-content">
+      <i class="fa-solid" [ngClass]="getIcon(error.type)"></i>
+      <span class="error-text">{{ error.message }}</span>
+    </div>
+    <button class="error-close" (click)="removeError(error)" title="Close">
+      <i class="fa-solid fa-times"></i>
+    </button>
+  </div>
+</div>

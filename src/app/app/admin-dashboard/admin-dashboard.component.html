@@ -1,0 +1,810 @@
+<div class="admin-dashboard-page">
+  <div *ngIf="loading" class="spinner-container">
+    <div class="spinner"></div>
+  </div>
+
+  <div *ngIf="!loading" class="fade-in dashboard-content">
+    <!-- Header -->
+    <div class="dashboard-header">
+      <div class="header-content">
+        <h1><i class="fa-solid fa-crown"></i> Admin Dashboard</h1>
+        <p>
+          Welcome back, {{ currentUser?.name?.firstname }}! Here's what's
+          happening with your store.
+        </p>
+      </div>
+      <div class="header-actions">
+        <button class="btn btn-outline" (click)="exportReport()">
+          <i class="fa-solid fa-download"></i>
+          Export Report
+        </button>
+        <button class="btn btn-primary" (click)="addProduct()">
+          <i class="fa-solid fa-plus"></i>
+          Add Product
+        </button>
+      </div>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon users">
+          <i class="fa-solid fa-users"></i>
+        </div>
+        <div class="stat-content">
+          <h3>{{ stats.totalUsers.toLocaleString() }}</h3>
+          <p>Total Users</p>
+          <span class="stat-change positive">
+            <i class="fa-solid fa-arrow-up"></i>
+            +12% this month
+          </span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon products">
+          <i class="fa-solid fa-box"></i>
+        </div>
+        <div class="stat-content">
+          <h3>{{ stats.totalProducts.toLocaleString() }}</h3>
+          <p>Total Products</p>
+          <span class="stat-change positive">
+            <i class="fa-solid fa-arrow-up"></i>
+            +5% this month
+          </span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon orders">
+          <i class="fa-solid fa-shopping-cart"></i>
+        </div>
+        <div class="stat-content">
+          <h3>{{ stats.totalOrders.toLocaleString() }}</h3>
+          <p>Total Orders</p>
+          <span class="stat-change positive">
+            <i class="fa-solid fa-arrow-up"></i>
+            +8% this month
+          </span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon revenue">
+          <i class="fa-solid fa-dollar-sign"></i>
+        </div>
+        <div class="stat-content">
+          <h3>${{ stats.totalRevenue.toLocaleString() }}</h3>
+          <p>Total Revenue</p>
+          <span class="stat-change positive">
+            <i class="fa-solid fa-arrow-up"></i>
+            +15% this month
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabs Navigation -->
+    <div class="dashboard-tabs">
+      <button
+        class="tab-button"
+        [class.active]="tab === 'overview'"
+        (click)="setTab('overview')"
+      >
+        <i class="fa-solid fa-chart-line"></i>
+        Overview
+      </button>
+      <button
+        class="tab-button"
+        [class.active]="tab === 'products'"
+        (click)="setTab('products')"
+      >
+        <i class="fa-solid fa-box"></i>
+        Products
+      </button>
+      <button
+        class="tab-button"
+        [class.active]="tab === 'orders'"
+        (click)="setTab('orders')"
+      >
+        <i class="fa-solid fa-shopping-cart"></i>
+        Orders
+      </button>
+      <button
+        class="tab-button"
+        [class.active]="tab === 'users'"
+        (click)="setTab('users')"
+      >
+        <i class="fa-solid fa-users"></i>
+        Users
+      </button>
+    </div>
+
+    <!-- Tab Content -->
+    <div class="tab-content">
+      <!-- Overview Tab -->
+      <div *ngIf="tab === 'overview'" class="tab-panel active">
+        <div class="overview-grid">
+          <!-- Recent Orders -->
+          <div class="overview-card">
+            <div class="card-header">
+              <h3>
+                <i class="fa-solid fa-clock"></i> Recent Orders ({{
+                  recentOrders.length
+                }})
+              </h3>
+              <a routerLink="/admin/orders" class="view-all">View All</a>
+            </div>
+            <div class="card-content">
+              <div *ngIf="recentOrders.length === 0" class="empty-state">
+                <i class="fa-solid fa-shopping-cart"></i>
+                <p>No recent orders</p>
+              </div>
+              <div *ngFor="let order of recentOrders" class="order-item">
+                <div class="order-info">
+                  <h4>Order #{{ order.id }}</h4>
+                  <p>{{ getUserName(order.userId) }}</p>
+                  <span class="order-date">{{
+                    order.date | date : "short"
+                  }}</span>
+                </div>
+                <div class="order-details">
+                  <span class="order-amount">${{ order.total }}</span>
+                  <span
+                    class="order-status"
+                    [style.color]="getStatusColor(order.status)"
+                  >
+                    <i [class]="getStatusIcon(order.status)"></i>
+                    {{ order.status }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recent Users -->
+          <div class="overview-card">
+            <div class="card-header">
+              <h3>
+                <i class="fa-solid fa-user-plus"></i> Recent Users ({{
+                  recentUsers.length
+                }})
+              </h3>
+              <a routerLink="/admin/users" class="view-all">View All</a>
+            </div>
+            <div class="card-content">
+              <div *ngIf="recentUsers.length === 0" class="empty-state">
+                <i class="fa-solid fa-users"></i>
+                <p>No recent users</p>
+              </div>
+              <div *ngFor="let user of recentUsers" class="user-item">
+                <div class="user-info">
+                  <h4>{{ user.name.firstname }} {{ user.name.lastname }}</h4>
+                  <p>{{ user.email }}</p>
+                  <span class="user-date">Username: {{ user.username }}</span>
+                </div>
+                <div class="user-status">
+                  <span
+                    class="status-badge"
+                    [style.background-color]="
+                      user.role === 'admin'
+                        ? '#ef4444'
+                        : getStatusColor('active')
+                    "
+                  >
+                    <i
+                      [class]="
+                        user.role === 'admin'
+                          ? 'fa-solid fa-crown'
+                          : getStatusIcon('active')
+                      "
+                    ></i>
+                    {{ user.role === "admin" ? "Admin" : "Active" }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Products Tab -->
+      <div *ngIf="tab === 'products'" class="tab-panel active">
+        <div class="products-management">
+          <div class="section-header">
+            <h2>Products Management</h2>
+            <button class="btn btn-primary" (click)="addProduct()">
+              <i class="fa-solid fa-plus"></i>
+              Add New Product
+            </button>
+          </div>
+
+          <!-- Search and Filter -->
+          <div class="filters-section">
+            <div class="search-filter-row">
+              <input
+                type="text"
+                placeholder="Search products..."
+                class="filter-select"
+                (input)="onProductSearch($event)"
+              />
+              <select
+                class="filter-select"
+                (change)="onProductFilterChange($event)"
+              >
+                <option value="all">All Categories</option>
+                <option value="men's clothing">Men's Clothing</option>
+                <option value="women's clothing">Women's Clothing</option>
+                <option value="jewelery">Jewelery</option>
+                <option value="electronics">Electronics</option>
+              </select>
+            </div>
+
+            <!-- Bulk Actions -->
+            <div *ngIf="selectedProducts.size > 0" class="bulk-actions">
+              <span class="selected-count"
+                >{{ selectedProducts.size }} products selected</span
+              >
+              <button
+                class="btn btn-sm btn-outline"
+                (click)="deleteSelectedProducts()"
+                style="color: #ef4444"
+              >
+                <i class="fa-solid fa-trash"></i>
+                Delete Selected
+              </button>
+            </div>
+          </div>
+
+          <div class="products-table">
+            <div *ngIf="filteredProducts.length === 0" class="placeholder-text">
+              <i class="fa-solid fa-box"></i>
+              {{
+                allProducts.length === 0
+                  ? "Loading products..."
+                  : "No products found"
+              }}
+            </div>
+
+            <div *ngIf="filteredProducts.length > 0" class="products-grid">
+              <!-- Select All Checkbox -->
+              <div class="select-all-row">
+                <label class="checkbox-label">
+                  <input
+                    type="checkbox"
+                    [checked]="
+                      selectedProducts.size === filteredProducts.length &&
+                      filteredProducts.length > 0
+                    "
+                    (change)="selectAllProducts($event)"
+                  />
+                  <span class="checkmark"></span>
+                  Select All ({{ filteredProducts.length }})
+                </label>
+              </div>
+
+              <div
+                *ngFor="let product of paginatedProducts"
+                class="product-card"
+              >
+                <div class="product-selection">
+                  <label class="checkbox-label">
+                    <input
+                      type="checkbox"
+                      [checked]="selectedProducts.has(product.id)"
+                      (change)="selectProduct(product.id, $event)"
+                    />
+                    <span class="checkmark"></span>
+                  </label>
+                </div>
+                <div class="product-image">
+                  <img [src]="product.image" [alt]="product.title" />
+                </div>
+                <div class="product-info">
+                  <h4>{{ product.title }}</h4>
+                  <p class="product-category">{{ product.category }}</p>
+                  <p class="product-price">${{ product.price }}</p>
+                  <div class="product-rating">
+                    <span class="stars">
+                      <i
+                        *ngFor="let star of [1, 2, 3, 4, 5]"
+                        [class]="
+                          star <= product.rating.rate
+                            ? 'fa-solid fa-star'
+                            : 'fa-regular fa-star'
+                        "
+                        [style.color]="
+                          star <= product.rating.rate ? '#fbbf24' : '#d1d5db'
+                        "
+                      >
+                      </i>
+                    </span>
+                    <span class="rating-text"
+                      >({{ product.rating.count }} reviews)</span
+                    >
+                  </div>
+                  <div class="product-actions">
+                    <button
+                      class="btn btn-sm btn-outline"
+                      (click)="viewProduct(product)"
+                    >
+                      <i class="fa-solid fa-eye"></i>
+                      View
+                    </button>
+                    <button
+                      class="btn btn-sm btn-outline"
+                      (click)="editProduct(product)"
+                    >
+                      <i class="fa-solid fa-edit"></i>
+                      Edit
+                    </button>
+                    <button
+                      class="btn btn-sm btn-outline"
+                      (click)="deleteProduct(product.id)"
+                      style="color: #ef4444"
+                    >
+                      <i class="fa-solid fa-trash"></i>
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pagination -->
+            <div *ngIf="totalPages > 1" class="pagination">
+              <button
+                class="btn btn-sm btn-outline"
+                [disabled]="currentPage === 1"
+                (click)="prevPage()"
+              >
+                <i class="fa-solid fa-chevron-left"></i>
+                Previous
+              </button>
+
+              <div class="page-numbers">
+                <button
+                  *ngFor="let page of pageNumbers"
+                  class="page-btn"
+                  [class.active]="page === currentPage"
+                  (click)="goToPage(page)"
+                >
+                  {{ page }}
+                </button>
+              </div>
+
+              <button
+                class="btn btn-sm btn-outline"
+                [disabled]="currentPage === totalPages"
+                (click)="nextPage()"
+              >
+                Next
+                <i class="fa-solid fa-chevron-right"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Orders Tab -->
+      <div *ngIf="tab === 'orders'" class="tab-panel active">
+        <div class="orders-management">
+          <div class="section-header">
+            <h2>Orders Management</h2>
+            <div class="order-filters">
+              <input
+                type="text"
+                placeholder="Search orders..."
+                class="filter-select"
+                (input)="onOrderSearch($event)"
+              />
+              <select
+                class="filter-select"
+                (change)="onOrderFilterChange($event)"
+              >
+                <option value="all">All Orders</option>
+                <option value="pending">Pending</option>
+                <option value="processing">Processing</option>
+                <option value="shipped">Shipped</option>
+                <option value="delivered">Delivered</option>
+                <option value="cancelled">Cancelled</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Bulk Actions -->
+          <div *ngIf="selectedOrders.size > 0" class="bulk-actions">
+            <span class="selected-count"
+              >{{ selectedOrders.size }} orders selected</span
+            >
+            <select class="status-select" (change)="onBulkStatusChange($event)">
+              <option value="">Update Status</option>
+              <option value="pending">Pending</option>
+              <option value="processing">Processing</option>
+              <option value="shipped">Shipped</option>
+              <option value="delivered">Delivered</option>
+              <option value="cancelled">Cancelled</option>
+            </select>
+          </div>
+
+          <div class="orders-table">
+            <div *ngIf="filteredOrders.length === 0" class="placeholder-text">
+              <i class="fa-solid fa-shopping-cart"></i>
+              {{
+                allOrders.length === 0 ? "Loading orders..." : "No orders found"
+              }}
+            </div>
+
+            <div *ngIf="filteredOrders.length > 0" class="orders-list">
+              <!-- Select All Checkbox -->
+              <div class="select-all-row">
+                <label class="checkbox-label">
+                  <input
+                    type="checkbox"
+                    [checked]="
+                      selectedOrders.size === filteredOrders.length &&
+                      filteredOrders.length > 0
+                    "
+                    (change)="selectAllOrders($event)"
+                  />
+                  <span class="checkmark"></span>
+                  Select All ({{ filteredOrders.length }})
+                </label>
+              </div>
+
+              <div *ngFor="let order of paginatedOrders" class="order-card">
+                <div class="order-selection">
+                  <label class="checkbox-label">
+                    <input
+                      type="checkbox"
+                      [checked]="selectedOrders.has(order.id)"
+                      (change)="selectOrder(order.id, $event)"
+                    />
+                    <span class="checkmark"></span>
+                  </label>
+                </div>
+                <div class="order-header">
+                  <h4>Order #{{ order.id }}</h4>
+                  <span class="order-date">{{
+                    order.date | date : "short"
+                  }}</span>
+                </div>
+                <div class="order-body">
+                  <p><strong>User ID:</strong> {{ order.userId }}</p>
+                  <p>
+                    <strong>Products:</strong> {{ order.products.length }} items
+                  </p>
+                  <p><strong>Total:</strong> ${{ order.total }}</p>
+                  <div class="order-status-section">
+                    <span
+                      class="order-status"
+                      [style.color]="getStatusColor(order.status)"
+                    >
+                      <i [class]="getStatusIcon(order.status)"></i>
+                      {{ order.status }}
+                    </span>
+                    <div class="order-actions">
+                      <select
+                        class="status-select"
+                        [value]="order.status"
+                        (change)="onStatusChange($event, order.id)"
+                      >
+                        <option value="pending">Pending</option>
+                        <option value="processing">Processing</option>
+                        <option value="shipped">Shipped</option>
+                        <option value="delivered">Delivered</option>
+                        <option value="cancelled">Cancelled</option>
+                      </select>
+                      <button
+                        class="btn btn-sm btn-outline"
+                        (click)="viewOrder(order)"
+                      >
+                        <i class="fa-solid fa-eye"></i>
+                        View
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pagination -->
+            <div *ngIf="totalPages > 1" class="pagination">
+              <button
+                class="btn btn-sm btn-outline"
+                [disabled]="currentPage === 1"
+                (click)="prevPage()"
+              >
+                <i class="fa-solid fa-chevron-left"></i>
+                Previous
+              </button>
+
+              <div class="page-numbers">
+                <button
+                  *ngFor="let page of pageNumbers"
+                  class="page-btn"
+                  [class.active]="page === currentPage"
+                  (click)="goToPage(page)"
+                >
+                  {{ page }}
+                </button>
+              </div>
+
+              <button
+                class="btn btn-sm btn-outline"
+                [disabled]="currentPage === totalPages"
+                (click)="nextPage()"
+              >
+                Next
+                <i class="fa-solid fa-chevron-right"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Users Tab -->
+      <div *ngIf="tab === 'users'" class="tab-panel active">
+        <div class="users-management">
+          <div class="section-header">
+            <h2>Users Management</h2>
+            <div class="user-filters">
+              <input
+                type="text"
+                placeholder="Search users..."
+                class="filter-select"
+                (input)="onUserSearch($event)"
+              />
+              <select
+                class="filter-select"
+                (change)="onUserFilterChange($event)"
+              >
+                <option value="all">All Users</option>
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+                <option value="admins">Admins</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Bulk Actions -->
+          <div *ngIf="selectedUsers.size > 0" class="bulk-actions">
+            <span class="selected-count"
+              >{{ selectedUsers.size }} users selected</span
+            >
+            <button
+              class="btn btn-sm btn-outline"
+              (click)="deleteSelectedUsers()"
+              style="color: #ef4444"
+            >
+              <i class="fa-solid fa-trash"></i>
+              Delete Selected
+            </button>
+          </div>
+
+          <div class="users-table">
+            <div *ngIf="filteredUsers.length === 0" class="placeholder-text">
+              <i class="fa-solid fa-users"></i>
+              {{
+                allUsers.length === 0 ? "Loading users..." : "No users found"
+              }}
+            </div>
+
+            <div *ngIf="filteredUsers.length > 0" class="users-list">
+              <!-- Select All Checkbox -->
+              <div class="select-all-row">
+                <label class="checkbox-label">
+                  <input
+                    type="checkbox"
+                    [checked]="
+                      selectedUsers.size === filteredUsers.length &&
+                      filteredUsers.length > 0
+                    "
+                    (change)="selectAllUsers($event)"
+                  />
+                  <span class="checkmark"></span>
+                  Select All ({{ filteredUsers.length }})
+                </label>
+              </div>
+
+              <div *ngFor="let user of paginatedUsers" class="user-card">
+                <div class="user-selection">
+                  <label class="checkbox-label">
+                    <input
+                      type="checkbox"
+                      [checked]="selectedUsers.has(user.id)"
+                      (change)="selectUser(user.id, $event)"
+                    />
+                    <span class="checkmark"></span>
+                  </label>
+                </div>
+                <div class="user-header">
+                  <h4>{{ user.name.firstname }} {{ user.name.lastname }}</h4>
+                  <span class="user-role">{{ user.role }}</span>
+                </div>
+                <div class="user-body">
+                  <p><strong>Email:</strong> {{ user.email }}</p>
+                  <p><strong>Username:</strong> {{ user.username }}</p>
+                  <p><strong>Phone:</strong> {{ user.phone }}</p>
+                  <p>
+                    <strong>Address:</strong> {{ user.address.city }},
+                    {{ user.address.street }}
+                  </p>
+                  <div class="user-actions">
+                    <button
+                      class="btn btn-sm btn-outline"
+                      (click)="viewUser(user)"
+                    >
+                      <i class="fa-solid fa-eye"></i>
+                      View
+                    </button>
+                    <button
+                      class="btn btn-sm btn-outline"
+                      (click)="editUser(user)"
+                    >
+                      <i class="fa-solid fa-edit"></i>
+                      Edit
+                    </button>
+                    <button
+                      class="btn btn-sm btn-outline"
+                      (click)="deleteUser(user.id)"
+                      style="color: #ef4444"
+                    >
+                      <i class="fa-solid fa-trash"></i>
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pagination -->
+            <div *ngIf="totalPages > 1" class="pagination">
+              <button
+                class="btn btn-sm btn-outline"
+                [disabled]="currentPage === 1"
+                (click)="prevPage()"
+              >
+                <i class="fa-solid fa-chevron-left"></i>
+                Previous
+              </button>
+
+              <div class="page-numbers">
+                <button
+                  *ngFor="let page of pageNumbers"
+                  class="page-btn"
+                  [class.active]="page === currentPage"
+                  (click)="goToPage(page)"
+                >
+                  {{ page }}
+                </button>
+              </div>
+
+              <button
+                class="btn btn-sm btn-outline"
+                [disabled]="currentPage === totalPages"
+                (click)="nextPage()"
+              >
+                Next
+                <i class="fa-solid fa-chevron-right"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Product Modal -->
+  <div
+    *ngIf="showAddProductModal"
+    class="modal-overlay"
+    (click)="closeAddProductModal()"
+  >
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-plus"></i> Add New Product</h3>
+        <button class="modal-close" (click)="closeAddProductModal()">
+          <i class="fa-solid fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="addProductForm" (ngSubmit)="saveProduct()">
+          <div class="form-group">
+            <label for="productTitle">Product Title *</label>
+            <input
+              type="text"
+              id="productTitle"
+              formControlName="title"
+              class="form-control"
+              placeholder="Enter product title"
+              [class.invalid]="addProductForm.get('title')?.invalid && addProductForm.get('title')?.touched"
+            />
+            <div *ngIf="addProductForm.get('title')?.invalid && addProductForm.get('title')?.touched" class="error-message">
+              <span *ngIf="addProductForm.get('title')?.errors?.['required']">Title is required</span>
+              <span *ngIf="addProductForm.get('title')?.errors?.['minlength']">Title must be at least 3 characters</span>
+              <span *ngIf="addProductForm.get('title')?.errors?.['maxlength']">Title cannot exceed 100 characters</span>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="productPrice">Price *</label>
+            <input
+              type="number"
+              id="productPrice"
+              formControlName="price"
+              min="0"
+              step="0.01"
+              class="form-control"
+              placeholder="Enter price"
+              [class.invalid]="addProductForm.get('price')?.invalid && addProductForm.get('price')?.touched"
+            />
+            <div *ngIf="addProductForm.get('price')?.invalid && addProductForm.get('price')?.touched" class="error-message">
+              <span *ngIf="addProductForm.get('price')?.errors?.['required']">Price is required</span>
+              <span *ngIf="addProductForm.get('price')?.errors?.['min']">Price must be at least 0</span>
+              <span *ngIf="addProductForm.get('price')?.errors?.['max']">Price cannot exceed 10000</span>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="productCategory">Category *</label>
+            <select
+              id="productCategory"
+              formControlName="category"
+              class="form-control"
+              [class.invalid]="addProductForm.get('category')?.invalid && addProductForm.get('category')?.touched"
+            >
+              <option value="">Select category</option>
+              <option value="men's clothing">Men's Clothing</option>
+              <option value="women's clothing">Women's Clothing</option>
+              <option value="jewelery">Jewelery</option>
+              <option value="electronics">Electronics</option>
+            </select>
+            <div *ngIf="addProductForm.get('category')?.invalid && addProductForm.get('category')?.touched" class="error-message">
+              <span *ngIf="addProductForm.get('category')?.errors?.['required']">Category is required</span>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="productDescription">Description</label>
+            <textarea
+              id="productDescription"
+              formControlName="description"
+              class="form-control"
+              rows="3"
+              placeholder="Enter product description"
+              [class.invalid]="addProductForm.get('description')?.invalid && addProductForm.get('description')?.touched"
+            ></textarea>
+            <div *ngIf="addProductForm.get('description')?.invalid && addProductForm.get('description')?.touched" class="error-message">
+              <span *ngIf="addProductForm.get('description')?.errors?.['maxlength']">Description cannot exceed 500 characters</span>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="productImage">Image URL</label>
+            <input
+              type="url"
+              id="productImage"
+              formControlName="image"
+              class="form-control"
+              placeholder="Enter image URL (optional)"
+              [class.invalid]="addProductForm.get('image')?.invalid && addProductForm.get('image')?.touched"
+            />
+            <div *ngIf="addProductForm.get('image')?.invalid && addProductForm.get('image')?.touched" class="error-message">
+              <span *ngIf="addProductForm.get('image')?.errors?.['pattern']">Please enter a valid URL</span>
+            </div>
+          </div>
+          
+          <div class="modal-actions">
+            <button type="button" class="btn btn-outline" (click)="closeAddProductModal()">
+              Cancel
+            </button>
+            <button type="submit" class="btn btn-primary" [disabled]="addProductForm.invalid">
+              <i class="fa-solid fa-save"></i> Save Product
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

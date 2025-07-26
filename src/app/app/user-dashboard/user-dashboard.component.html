@@ -1,0 +1,366 @@
+<div class="user-dashboard-page">
+  <div *ngIf="loading" class="spinner-container">
+    <div class="spinner"></div>
+  </div>
+
+  <div *ngIf="!loading" class="fade-in dashboard-content">
+    <!-- Header -->
+    <div class="dashboard-header">
+      <div class="header-content">
+        <h1><i class="fa-solid fa-user"></i> User Dashboard</h1>
+        <p>
+          Welcome back, {{ currentUser?.name?.firstname }}
+          {{ currentUser?.name?.lastname }}! Here's your personal overview.
+        </p>
+      </div>
+      <div class="header-actions">
+        <button class="btn btn-outline">
+          <i class="fa-solid fa-cog"></i>
+          Settings
+        </button>
+        <button class="btn btn-primary">
+          <i class="fa-solid fa-shopping-cart"></i>
+          View Cart
+        </button>
+      </div>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon orders">
+          <i class="fa-solid fa-shopping-bag"></i>
+        </div>
+        <div class="stat-content">
+          <h3>{{ userStats.totalOrders.toLocaleString() }}</h3>
+          <p>Total Orders</p>
+          <span class="stat-change positive">
+            <i class="fa-solid fa-arrow-up"></i>
+            +3 this month
+          </span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon spent">
+          <i class="fa-solid fa-dollar-sign"></i>
+        </div>
+        <div class="stat-content">
+          <h3>${{ userStats.totalSpent.toLocaleString() }}</h3>
+          <p>Total Spent</p>
+          <span class="stat-change positive">
+            <i class="fa-solid fa-arrow-up"></i>
+            +15% this month
+          </span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon wishlist">
+          <i class="fa-solid fa-heart"></i>
+        </div>
+        <div class="stat-content">
+          <h3>{{ userStats.wishlistItems.toLocaleString() }}</h3>
+          <p>Wishlist Items</p>
+          <span class="stat-change positive">
+            <i class="fa-solid fa-arrow-up"></i>
+            +2 this month
+          </span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon reviews">
+          <i class="fa-solid fa-star"></i>
+        </div>
+        <div class="stat-content">
+          <h3>{{ userStats.reviews.toLocaleString() }}</h3>
+          <p>Reviews Given</p>
+          <span class="stat-change positive">
+            <i class="fa-solid fa-arrow-up"></i>
+            +1 this month
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabs Navigation -->
+    <div class="dashboard-tabs">
+      <button
+        class="tab-button"
+        [class.active]="tab === 'overview'"
+        (click)="setTab('overview')"
+      >
+        <i class="fa-solid fa-chart-line"></i>
+        Overview
+      </button>
+      <button
+        class="tab-button"
+        [class.active]="tab === 'orders'"
+        (click)="setTab('orders')"
+      >
+        <i class="fa-solid fa-shopping-bag"></i>
+        Orders
+      </button>
+      <button
+        class="tab-button"
+        [class.active]="tab === 'wishlist'"
+        (click)="setTab('wishlist')"
+      >
+        <i class="fa-solid fa-heart"></i>
+        Wishlist
+      </button>
+      <button
+        class="tab-button"
+        [class.active]="tab === 'profile'"
+        (click)="setTab('profile')"
+      >
+        <i class="fa-solid fa-user"></i>
+        Profile
+      </button>
+    </div>
+
+    <!-- Tab Content -->
+    <div class="tab-content">
+      <!-- Overview Tab -->
+      <div *ngIf="tab === 'overview'" class="tab-panel active">
+        <div class="overview-grid">
+          <!-- Recent Orders -->
+          <div class="overview-card">
+            <div class="card-header">
+              <h3><i class="fa-solid fa-clock"></i> Recent Orders</h3>
+              <a routerLink="/dashboard/orders" class="view-all">View All</a>
+            </div>
+            <div class="card-content">
+              <div *ngIf="recentOrders.length === 0" class="placeholder-text">
+                <i class="fa-solid fa-shopping-bag"></i>
+                No orders yet
+              </div>
+              <div *ngFor="let order of recentOrders" class="order-item">
+                <div class="order-info">
+                  <h4>Order #{{ order.id }}</h4>
+                  <p>{{ order.products.length }} items</p>
+                  <span class="order-date">{{
+                    order.date | date : "short"
+                  }}</span>
+                </div>
+                <div class="order-details">
+                  <span class="order-amount">${{ order.total }}</span>
+                  <span
+                    class="order-status"
+                    [style.color]="getStatusColor(order.status)"
+                  >
+                    <i [class]="getStatusIcon(order.status)"></i>
+                    {{ order.status }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Actions -->
+          <div class="overview-card">
+            <div class="card-header">
+              <h3><i class="fa-solid fa-bolt"></i> Quick Actions</h3>
+            </div>
+            <div class="card-content">
+              <div class="quick-actions-grid">
+                <button class="quick-action-btn">
+                  <i class="fa-solid fa-shopping-cart"></i>
+                  <span>Continue Shopping</span>
+                </button>
+                <button class="quick-action-btn">
+                  <i class="fa-solid fa-heart"></i>
+                  <span>View Wishlist</span>
+                </button>
+                <button class="quick-action-btn">
+                  <i class="fa-solid fa-star"></i>
+                  <span>Write Review</span>
+                </button>
+                <button class="quick-action-btn">
+                  <i class="fa-solid fa-cog"></i>
+                  <span>Update Profile</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Orders Tab -->
+      <div *ngIf="tab === 'orders'" class="tab-panel active">
+        <div class="orders-management">
+          <div class="section-header">
+            <h2>My Orders</h2>
+            <div class="order-filters">
+              <select class="filter-select">
+                <option>All Orders</option>
+                <option>Pending</option>
+                <option>Processing</option>
+                <option>Shipped</option>
+                <option>Delivered</option>
+              </select>
+            </div>
+          </div>
+          <div class="orders-table">
+            <div *ngIf="allOrders.length === 0" class="placeholder-text">
+              <i class="fa-solid fa-shopping-bag"></i>
+              No orders found
+            </div>
+            <div *ngIf="allOrders.length > 0" class="orders-list">
+              <div *ngFor="let order of allOrders" class="order-card">
+                <div class="order-header">
+                  <h4>Order #{{ order.id }}</h4>
+                  <span class="order-date">{{
+                    order.date | date : "short"
+                  }}</span>
+                </div>
+                <div class="order-body">
+                  <p>
+                    <strong>Items:</strong> {{ order.products.length }} products
+                  </p>
+                  <p><strong>Total:</strong> ${{ order.total }}</p>
+                  <div class="order-status-section">
+                    <span
+                      class="order-status"
+                      [style.color]="getStatusColor(order.status)"
+                    >
+                      <i [class]="getStatusIcon(order.status)"></i>
+                      {{ order.status }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Wishlist Tab -->
+      <div *ngIf="tab === 'wishlist'" class="tab-panel active">
+        <div class="wishlist-management">
+          <div class="section-header">
+            <h2>My Wishlist</h2>
+            <div class="wishlist-count">{{ wishlistItems.length }} items</div>
+          </div>
+          <div class="wishlist-table">
+            <div *ngIf="wishlistItems.length === 0" class="placeholder-text">
+              <i class="fa-solid fa-heart"></i>
+              Your wishlist is empty
+            </div>
+            <div *ngIf="wishlistItems.length > 0" class="wishlist-grid">
+              <div *ngFor="let item of wishlistItems" class="wishlist-item">
+                <div class="item-image">
+                  <img [src]="item.image" [alt]="item.name" />
+                </div>
+                <div class="item-info">
+                  <h4>{{ item.name }}</h4>
+                  <p class="item-price">${{ item.price }}</p>
+                </div>
+                <div class="item-actions">
+                  <button
+                    class="btn btn-sm btn-primary"
+                    (click)="addToCart(item)"
+                  >
+                    <i class="fa-solid fa-cart-plus"></i>
+                    Add to Cart
+                  </button>
+                  <button
+                    class="btn btn-sm btn-outline"
+                    (click)="removeFromWishlist(item.id)"
+                    style="color: #ef4444"
+                  >
+                    <i class="fa-solid fa-trash"></i>
+                    Remove
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Profile Tab -->
+      <div *ngIf="tab === 'profile'" class="tab-panel active">
+        <div class="profile-management">
+          <div class="section-header">
+            <h2>My Profile</h2>
+            <button class="btn btn-primary">
+              <i class="fa-solid fa-edit"></i>
+              Edit Profile
+            </button>
+          </div>
+          <div class="profile-content">
+            <div *ngIf="currentUser" class="profile-card">
+              <div class="profile-header">
+                <div class="profile-avatar">
+                  <i class="fa-solid fa-user"></i>
+                </div>
+                <div class="profile-info">
+                  <h3>
+                    {{ currentUser.name.firstname }}
+                    {{ currentUser.name.lastname }}
+                  </h3>
+                  <p class="member-since">Member since {{ currentUser.id }}</p>
+                </div>
+              </div>
+              <div class="profile-details">
+                <div class="detail-item">
+                  <strong>Email:</strong> {{ currentUser.email }}
+                </div>
+                <div class="detail-item">
+                  <strong>Username:</strong> {{ currentUser.username }}
+                </div>
+                <div class="detail-item">
+                  <strong>Phone:</strong> {{ currentUser.phone }}
+                </div>
+                <div class="detail-item">
+                  <strong>Address:</strong> {{ currentUser.address.street }},
+                  {{ currentUser.address.city }}
+                </div>
+                <div class="detail-item">
+                  <strong>Role:</strong> {{ currentUser.role }}
+                </div>
+              </div>
+            </div>
+            <div class="settings-section">
+              <h3>Account Settings</h3>
+              <div class="settings-list">
+                <div class="setting-item">
+                  <div class="setting-info">
+                    <h4>Change Password</h4>
+                    <p>Update your account password</p>
+                  </div>
+                  <button class="btn btn-sm btn-outline">
+                    <i class="fa-solid fa-key"></i>
+                    Change
+                  </button>
+                </div>
+                <div class="setting-item">
+                  <div class="setting-info">
+                    <h4>Notification Preferences</h4>
+                    <p>Manage your email notifications</p>
+                  </div>
+                  <button class="btn btn-sm btn-outline">
+                    <i class="fa-solid fa-bell"></i>
+                    Configure
+                  </button>
+                </div>
+                <div class="setting-item">
+                  <div class="setting-info">
+                    <h4>Privacy Settings</h4>
+                    <p>Control your privacy and data</p>
+                  </div>
+                  <button class="btn btn-sm btn-outline">
+                    <i class="fa-solid fa-shield"></i>
+                    Manage
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

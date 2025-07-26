@@ -1,0 +1,168 @@
+<header class="header-main">
+  <div class="container header-content">
+    <div class="brand">
+      <span class="logo">GenCommerce</span>
+    </div>
+    <nav class="nav-desktop" aria-label="Main navigation">
+      <a
+        routerLink="/"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <i class="fa-solid fa-house"></i>
+        Home
+      </a>
+      <a routerLink="/products" routerLinkActive="active">
+        <i class="fa-solid fa-store"></i>
+        Products
+      </a>
+      <a routerLink="/cart" routerLinkActive="active">
+        <i class="fa-solid fa-cart-shopping"></i>
+        Cart
+        <span *ngIf="cartItemCount > 0" class="cart-count">{{
+          cartItemCount
+        }}</span>
+      </a>
+      <a
+        *ngIf="isAuthenticated()"
+        routerLink="/dashboard"
+        routerLinkActive="active"
+      >
+        <i class="fa-solid fa-user"></i>
+        Dashboard
+      </a>
+      <a *ngIf="isAdmin()" routerLink="/admin" routerLinkActive="active">
+        <i class="fa-solid fa-crown"></i>
+        Admin
+      </a>
+    </nav>
+    <div class="header-actions">
+      <a routerLink="/cart" class="cart-btn" aria-label="Cart">
+        <i class="fa-solid fa-cart-shopping"></i>
+        <span *ngIf="cartItemCount > 0" class="cart-badge">{{
+          cartItemCount
+        }}</span>
+      </a>
+
+      <!-- User Menu -->
+      <div *ngIf="isAuthenticated()" class="user-menu">
+        <div class="user-info">
+          <i class="fa-solid fa-user-circle"></i>
+          <span>{{ currentUser?.name?.firstname || "User" }}</span>
+        </div>
+        <div class="user-dropdown">
+          <a routerLink="/dashboard">
+            <i class="fa-solid fa-user"></i>
+            Profile
+          </a>
+          <a routerLink="/cart">
+            <i class="fa-solid fa-cart-shopping"></i>
+            Cart ({{ cartItemCount }})
+          </a>
+          <button (click)="logout()" class="logout-btn">
+            <i class="fa-solid fa-sign-out-alt"></i>
+            Logout
+          </button>
+        </div>
+      </div>
+
+      <!-- Auth Buttons -->
+      <div *ngIf="!isAuthenticated()" class="auth-buttons">
+        <a routerLink="/login" class="btn btn-outline hide-on-mobile">
+          <i class="fa-solid fa-sign-in-alt"></i>
+          Sign In
+        </a>
+        <a routerLink="/register" class="btn btn-primary hide-on-mobile">
+          <i class="fa-solid fa-user-plus"></i>
+          Sign Up
+        </a>
+      </div>
+
+      <button
+        class="menu-btn"
+        [class.open]="showMobileNav"
+        aria-label="Open Menu"
+        (click)="toggleMobileNav()"
+      >
+        <i class="fa-solid fa-bars icon-menu"></i>
+        <i class="fa-solid fa-xmark icon-x"></i>
+      </button>
+    </div>
+  </div>
+  <!-- Mobile Navigation Drawer -->
+  <div class="mobile-nav" [class.active]="showMobileNav">
+    <div class="mobile-nav-content">
+      <button
+        class="close-btn"
+        aria-label="Close Menu"
+        (click)="closeMobileNav()"
+      >
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <a
+        routerLink="/"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        (click)="closeMobileNav()"
+      >
+        <i class="fa-solid fa-house"></i> Home
+      </a>
+      <a
+        routerLink="/products"
+        routerLinkActive="active"
+        (click)="closeMobileNav()"
+      >
+        <i class="fa-solid fa-store"></i> Products
+      </a>
+      <a
+        routerLink="/cart"
+        routerLinkActive="active"
+        (click)="closeMobileNav()"
+      >
+        <i class="fa-solid fa-cart-shopping"></i> Cart
+        <span *ngIf="cartItemCount > 0" class="cart-count">{{
+          cartItemCount
+        }}</span>
+      </a>
+
+      <!-- Mobile User Menu -->
+      <div *ngIf="isAuthenticated()" class="mobile-user-menu">
+        <div class="user-info">
+          <i class="fa-solid fa-user-circle"></i>
+          <span
+            >{{ currentUser?.name?.firstname || 'User' }}
+            {{ currentUser?.name?.lastname || '' }}</span
+          >
+        </div>
+        <a routerLink="/dashboard" (click)="closeMobileNav()">
+          <i class="fa-solid fa-user"></i> Dashboard
+        </a>
+        <a *ngIf="isAdmin()" routerLink="/admin" (click)="closeMobileNav()">
+          <i class="fa-solid fa-crown"></i> Admin
+        </a>
+        <button (click)="logout(); closeMobileNav()" class="logout-btn">
+          <i class="fa-solid fa-sign-out-alt"></i> Logout
+        </button>
+      </div>
+
+      <!-- Mobile Auth Buttons -->
+      <div *ngIf="!isAuthenticated()" class="mobile-auth-buttons">
+        <a
+          routerLink="/login"
+          class="btn btn-outline"
+          (click)="closeMobileNav()"
+        >
+          <i class="fa-solid fa-sign-in-alt"></i> Sign In
+        </a>
+        <a
+          routerLink="/register"
+          class="btn btn-primary"
+          (click)="closeMobileNav()"
+        >
+          <i class="fa-solid fa-user-plus"></i> Sign Up
+        </a>
+      </div>
+    </div>
+    <div class="mobile-nav-bg" (click)="closeMobileNav()"></div>
+  </div>
+</header>

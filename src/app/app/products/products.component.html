@@ -1,0 +1,231 @@
+<div class="products-page">
+  <div *ngIf="loading" class="spinner-container">
+    <div class="spinner"></div>
+  </div>
+  
+  <div *ngIf="!loading" class="fade-in products-container">
+    <!-- Mobile Filter Toggle -->
+    <div class="mobile-filter-toggle">
+      <button class="filter-toggle-btn" (click)="toggleSidebar()">
+        <i class="fa-solid fa-filter"></i>
+        Filters
+        <span class="filter-count" *ngIf="activeFiltersCount > 0">({{ activeFiltersCount }})</span>
+      </button>
+    </div>
+
+    <!-- Sidebar Filters -->
+    <aside class="products-sidebar" [class.sidebar-open]="isSidebarOpen">
+      <div class="sidebar-header">
+        <h3><i class="fa-solid fa-filter"></i> Filters</h3>
+        <button class="close-sidebar-btn" (click)="toggleSidebar()" *ngIf="isMobile">
+          <i class="fa-solid fa-times"></i>
+        </button>
+      </div>
+
+      <!-- Search Section -->
+      <div class="filter-section">
+        <h4><i class="fa-solid fa-search"></i> Search</h4>
+        <div class="search-input-wrapper">
+          <input
+            type="text"
+            [(ngModel)]="searchTerm"
+            (input)="onSearchChange()"
+            placeholder="Search products..."
+            class="search-input"
+          />
+          <i class="fa-solid fa-search search-icon"></i>
+        </div>
+      </div>
+
+      <!-- Category Section -->
+      <div class="filter-section">
+        <h4><i class="fa-solid fa-tags"></i> Category</h4>
+        <div class="checkbox-group">
+          <label class="checkbox-item">
+            <input
+              type="radio"
+              name="category"
+              [value]="''"
+              [(ngModel)]="selectedCategory"
+              (change)="onCategoryChange()"
+            />
+            <span class="checkmark"></span>
+            <span class="label-text">All Categories</span>
+          </label>
+          <label *ngFor="let category of categories" class="checkbox-item">
+            <input
+              type="radio"
+              name="category"
+              [value]="category"
+              [(ngModel)]="selectedCategory"
+              (change)="onCategoryChange()"
+            />
+            <span class="checkmark"></span>
+            <span class="label-text">{{ category }}</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Price Range Section -->
+      <div class="filter-section">
+        <h4><i class="fa-solid fa-dollar-sign"></i> Price Range</h4>
+        <div class="price-slider-container">
+          <input
+            type="range"
+            min="0"
+            [max]="maxPrice"
+            [(ngModel)]="currentMaxPrice"
+            (input)="onPriceChange($event)"
+            class="price-slider"
+          />
+          <div class="price-range-display">
+            <span class="price-min">$0</span>
+            <span class="price-max">${{ currentMaxPrice }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Clear Filters Button -->
+      <div class="filter-actions">
+        <button class="clear-filters-btn" (click)="clearFilters()">
+          <i class="fa-solid fa-rotate-left"></i>
+          Clear All Filters
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <section class="products-main">
+      <div class="products-toolbar">
+        <div class="toolbar-left">
+          <span class="sort-label">Sort by:</span>
+          <select [(ngModel)]="selectedSort" (change)="onSortChange()" class="sort-select">
+            <option value="newest">Newest</option>
+            <option value="price-low">Price: Low to High</option>
+            <option value="price-high">Price: High to Low</option>
+            <option value="rating">Highest Rated</option>
+            <option value="popular">Most Popular</option>
+          </select>
+        </div>
+        <div class="products-count">
+          Showing {{ pageStart }}-{{ pageEnd }} of {{ total }} products
+        </div>
+      </div>
+      
+      <div class="products-grid">
+        <ng-container *ngFor="let product of pagedProducts">
+          <div class="product-card">
+            <div class="product-image">
+              <img [src]="product.image" [alt]="product.title" />
+              <div class="product-category">{{ product.category }}</div>
+            </div>
+            <div class="product-content">
+              <h4 class="product-title">{{ product.title }}</h4>
+              <p class="product-description">{{ product.description | slice : 0 : 80 }}...</p>
+              <div class="product-rating">
+                <span class="text-primary font-bold text-xl">${{ product.price }}</span>
+                <span class="stars">
+                  <i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-star"></i>
+                </span>
+                <span class="rating-count">({{ product.rating.count }})</span>
+              </div>
+              <div class="product-actions">
+                <button
+                  class="btn btn-primary btn-sm"
+                  (click)="addToCart(product)"
+                  [disabled]="isProductInCart(product.id)"
+                >
+                  <i class="fa-solid fa-cart-plus"></i>
+                  {{ isProductInCart(product.id) ? "In Cart" : "Add to Cart" }}
+                </button>
+                <a
+                  [routerLink]="['/product', product.id]"
+                  class="btn btn-outline btn-sm"
+                >
+                  <i class="fa-solid fa-eye"></i>
+                  View Details
+                </a>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+      
+      <!-- Pagination -->
+      <div class="products-pagination">
+        <button
+          class="btn btn-outline btn-sm"
+          [disabled]="page === 1"
+          (click)="setPage(page - 1)"
+        >
+          &lt;
+        </button>
+        <ng-container
+          *ngFor="let p of [].constructor(totalPages); let i = index"
+        >
+          <ng-container
+            *ngIf="
+              (i + 1 >= page - 2 && i + 1 <= page + 2) ||
+              i + 1 === 1 ||
+              i + 1 === totalPages
+            "
+          >
+            <button
+              class="btn btn-sm"
+              [ngClass]="{
+                'btn-primary': page === i + 1,
+                'btn-outline': page !== i + 1
+              }"
+              (click)="setPage(i + 1)"
+              [disabled]="page === i + 1"
+            >
+              {{ i + 1 }}
+            </button>
+            <ng-container *ngIf="i + 1 === page + 2 && i + 2 < totalPages">
+              <span class="px-2">...</span>
+            </ng-container>
+          </ng-container>
+        </ng-container>
+        <button
+          class="btn btn-outline btn-sm"
+          [disabled]="page === totalPages"
+          (click)="setPage(page + 1)"
+        >
+          &gt;
+        </button>
+      </div>
+    </section>
+  </div>
+</div>
+
+<!-- Overlay for mobile sidebar -->
+<div class="sidebar-overlay" *ngIf="isSidebarOpen && isMobile" (click)="toggleSidebar()"></div>
+
+<!-- Spinner Styles -->
+<style>
+  .spinner-container {
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+  }
+  .spinner {
+    width: 3rem;
+    height: 3rem;
+    border: 4px solid #e0e7ff;
+    border-top: 4px solid var(--primary, #2563eb);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: auto;
+  }
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+</style>

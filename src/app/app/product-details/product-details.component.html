@@ -1,0 +1,215 @@
+<div class="product-details-page">
+  <div *ngIf="loading" class="spinner-container">
+    <div class="spinner"></div>
+  </div>
+
+  <div *ngIf="!loading && product" class="fade-in checkout-content">
+    <!-- Product Layout -->
+    <div class="product-layout">
+      <!-- Product Image Section -->
+      <div class="product-image-section">
+        <img [src]="product.image" [alt]="product.title" class="main-image" />
+        <div class="thumbnail-grid">
+          <img
+            [src]="product.image"
+            [alt]="product.title"
+            class="thumbnail active"
+          />
+          <img [src]="product.image" [alt]="product.title" class="thumbnail" />
+          <img [src]="product.image" [alt]="product.title" class="thumbnail" />
+          <img [src]="product.image" [alt]="product.title" class="thumbnail" />
+        </div>
+      </div>
+
+      <!-- Product Info Section -->
+      <div class="product-info-section">
+        <h1 class="product-title">{{ product.title }}</h1>
+        <p class="product-description">{{ product.description }}</p>
+
+        <!-- Product Meta -->
+        <div class="product-meta">
+          <div class="meta-item">
+            <i class="fa-solid fa-tag"></i>
+            <span>{{ product.category }}</span>
+          </div>
+          <div class="meta-item">
+            <i class="fa-solid fa-star"></i>
+            <span
+              >{{ product.rating.rate }} ({{
+                product.rating.count
+              }}
+              reviews)</span
+            >
+          </div>
+          <div class="meta-item">
+            <i class="fa-solid fa-box"></i>
+            <span>In Stock</span>
+          </div>
+        </div>
+
+        <!-- Price Section -->
+        <div class="price-section">
+          <div class="price">${{ product.price | number : "1.2-2" }}</div>
+          <div class="stars">
+            <ng-container
+              *ngFor="
+                let star of getStarRating(product.rating.rate);
+                let i = index
+              "
+            >
+              <i *ngIf="star === 1" class="fa-solid fa-star"></i>
+              <i *ngIf="star === 0.5" class="fa-solid fa-star-half-stroke"></i>
+              <i *ngIf="star === 0" class="fa-regular fa-star star-empty"></i>
+            </ng-container>
+          </div>
+        </div>
+
+        <!-- Quantity Section -->
+        <div class="quantity-section">
+          <span class="quantity-label">Quantity:</span>
+          <div class="quantity-controls">
+            <button
+              class="quantity-btn"
+              (click)="updateQuantity(-1)"
+              [disabled]="quantity <= 1"
+            >
+              <i class="fa-solid fa-minus"></i>
+            </button>
+            <span class="quantity-display">{{ quantity }}</span>
+            <button
+              class="quantity-btn"
+              (click)="updateQuantity(1)"
+              [disabled]="quantity >= 10"
+            >
+              <i class="fa-solid fa-plus"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+          <button
+            class="btn btn-primary"
+            (click)="addToCart()"
+            [disabled]="isProductInCart()"
+          >
+            <i class="fa-solid fa-cart-plus"></i>
+            {{
+              isProductInCart()
+                ? "In Cart (" + getProductQuantity() + ")"
+                : "Add to Cart"
+            }}
+          </button>
+          <button class="btn btn-outline">
+            <i class="fa-solid fa-heart"></i>
+            Wishlist
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product Details Tabs -->
+    <div class="product-details-tabs">
+      <div class="tab-header">
+        <button class="tab-button active">Description</button>
+        <button class="tab-button">Specifications</button>
+        <button class="tab-button">Reviews</button>
+        <button class="tab-button">Shipping</button>
+      </div>
+      <div class="tab-content">
+        <div class="tab-panel active">
+          <h3>Product Description</h3>
+          <p>{{ product.description }}</p>
+          <p>
+            This high-quality product offers exceptional value and performance.
+            Made with premium materials and designed for durability, it's
+            perfect for everyday use.
+          </p>
+        </div>
+        <div class="tab-panel">
+          <h3>Product Specifications</h3>
+          <ul>
+            <li><strong>Category:</strong> {{ product.category }}</li>
+            <li><strong>Brand:</strong> Premium Brand</li>
+            <li><strong>Material:</strong> High-quality materials</li>
+            <li><strong>Warranty:</strong> 1 year manufacturer warranty</li>
+            <li><strong>Dimensions:</strong> Standard size</li>
+          </ul>
+        </div>
+        <div class="tab-panel">
+          <h3>Customer Reviews</h3>
+          <div class="review-summary">
+            <div class="rating-display">
+              <span class="rating-number">{{ product.rating.rate }}</span>
+              <div class="stars">
+                <ng-container
+                  *ngFor="
+                    let star of getStarRating(product.rating.rate);
+                    let i = index
+                  "
+                >
+                  <i *ngIf="star === 1" class="fa-solid fa-star"></i>
+                  <i
+                    *ngIf="star === 0.5"
+                    class="fa-solid fa-star-half-stroke"
+                  ></i>
+                  <i
+                    *ngIf="star === 0"
+                    class="fa-regular fa-star star-empty"
+                  ></i>
+                </ng-container>
+              </div>
+              <span class="review-count"
+                >Based on {{ product.rating.count }} reviews</span
+              >
+            </div>
+          </div>
+        </div>
+        <div class="tab-panel">
+          <h3>Shipping Information</h3>
+          <ul>
+            <li><strong>Free Shipping:</strong> On orders over $50</li>
+            <li><strong>Standard Delivery:</strong> 3-5 business days</li>
+            <li><strong>Express Delivery:</strong> 1-2 business days</li>
+            <li><strong>Returns:</strong> 30-day money-back guarantee</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Related Products -->
+    <div class="related-products" *ngIf="relatedProducts.length > 0">
+      <h3>Related Products</h3>
+      <div class="related-grid">
+        <div
+          class="related-card"
+          *ngFor="let relatedProduct of relatedProducts"
+          [routerLink]="['/product', relatedProduct.id]"
+        >
+          <img
+            [src]="relatedProduct.image"
+            [alt]="relatedProduct.title"
+            class="related-image"
+          />
+          <h4 class="related-title">{{ relatedProduct.title }}</h4>
+          <div class="related-price">
+            ${{ relatedProduct.price | number : "1.2-2" }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="!loading && !product" class="error-state">
+    <div class="error-content">
+      <i class="fa-solid fa-exclamation-triangle"></i>
+      <h2>Product Not Found</h2>
+      <p>The product you're looking for doesn't exist or has been removed.</p>
+      <a routerLink="/products" class="btn btn-primary">
+        <i class="fa-solid fa-arrow-left"></i>
+        Back to Products
+      </a>
+    </div>
+  </div>
+</div>
