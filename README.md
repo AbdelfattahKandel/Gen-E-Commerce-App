@@ -1,5 +1,10 @@
 # Gen Commerce - Angular E-commerce Application
 
+[![Angular](https://img.shields.io/badge/Angular-17.3.0-red.svg)](https://angular.io/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.4.2-blue.svg)](https://www.typescriptlang.org/)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![CI/CD](https://img.shields.io/badge/CI/CD-GitHub%20Actions-blue.svg)](.github/workflows/ci.yml)
+
 A modern, responsive e-commerce platform built with Angular 17, featuring a beautiful UI, comprehensive functionality, and excellent user experience.
 
 ## 🚀 Features
@@ -38,6 +43,8 @@ A modern, responsive e-commerce platform built with Angular 17, featuring a beau
 
 - **Angular CLI** - Development and build tools
 - **ESLint** - Code quality and linting
+- **Prettier** - Code formatting
+- **Husky** - Git hooks for code quality
 - **Karma & Jasmine** - Unit testing framework
 - **Angular PWA** - Progressive Web App support
 - **Angular Localize** - Internationalization support
@@ -144,9 +151,14 @@ src/
 - **`npm run build`** - Build for production
 - **`npm run build:dev`** - Build for development
 - **`npm test`** - Run unit tests
+- **`npm run test:coverage`** - Run tests with coverage
+- **`npm run test:watch`** - Run tests in watch mode
 - **`npm run lint`** - Run ESLint
 - **`npm run lint:fix`** - Fix ESLint issues
-- **`npm run extract-i18n`** - Extract internationalization strings
+- **`npm run format`** - Format code with Prettier
+- **`npm run format:check`** - Check code formatting
+- **`npm run e2e`** - Run end-to-end tests
+- **`npm run analyze`** - Analyze bundle size
 
 ## 🎨 Styling
 
@@ -261,6 +273,8 @@ The application is fully responsive with:
 - **A/B Testing** - Feature experimentation
 
 ## 🤝 Contributing
+
+We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
