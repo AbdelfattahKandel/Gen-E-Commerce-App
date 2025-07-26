@@ -16,7 +16,7 @@ export class AuthComponent {
   showPassword = false;
   showConfirmPassword = false;
 
-  // Form data
+
   formData = {
     firstName: '',
     lastName: '',
@@ -26,7 +26,7 @@ export class AuthComponent {
     confirmPassword: '',
   };
 
-  // Form validation
+
   errors = {
     firstName: '',
     lastName: '',
@@ -133,7 +133,7 @@ export class AuthComponent {
     if (this.validateForm()) {
       this.loading = true;
 
-      // Simulate API call
+
       setTimeout(() => {
         this.loading = false;
         if (this.isLoginMode) {
@@ -141,10 +141,10 @@ export class AuthComponent {
             email: this.formData.email,
             password: this.formData.password,
           });
-          // Handle login logic here
+
         } else {
           console.log('Register attempt:', this.formData);
-          // Handle register logic here
+
         }
       }, 2000);
     }
@@ -152,6 +152,6 @@ export class AuthComponent {
 
   onSocialLogin(provider: string) {
     console.log(`${provider} login clicked`);
-    // Handle social login logic here
+
   }
 }

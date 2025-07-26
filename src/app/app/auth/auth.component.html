@@ -2,10 +2,8 @@
   <div *ngIf="loading" class="spinner-container">
     <div class="spinner"></div>
   </div>
-
   <div *ngIf="!loading" class="fade-in auth-content">
     <div class="auth-card">
-      <!-- Mode Toggle -->
       <div class="mode-toggle">
         <button
           [class.active]="isLoginMode"
@@ -24,8 +22,6 @@
           Sign Up
         </button>
       </div>
-
-      <!-- Header -->
       <div class="auth-header">
         <div class="auth-icon">
           <i
@@ -43,10 +39,7 @@
           }}
         </p>
       </div>
-
-      <!-- Form -->
       <form class="auth-form" (ngSubmit)="onSubmit()">
-        <!-- Register Mode Fields -->
         <div *ngIf="!isLoginMode" class="form-row">
           <div class="form-group">
             <label for="firstName">
@@ -66,7 +59,6 @@
               errors.firstName
             }}</span>
           </div>
-
           <div class="form-group">
             <label for="lastName">
               <i class="fa-solid fa-user"></i>
@@ -86,8 +78,6 @@
             }}</span>
           </div>
         </div>
-
-        <!-- Email Field -->
         <div class="form-group">
           <label for="email">
             <i class="fa-solid fa-envelope"></i>
@@ -106,8 +96,6 @@
             errors.email
           }}</span>
         </div>
-
-        <!-- Phone Field (Register Mode Only) -->
         <div *ngIf="!isLoginMode" class="form-group">
           <label for="phone">
             <i class="fa-solid fa-phone"></i>
@@ -126,8 +114,6 @@
             errors.phone
           }}</span>
         </div>
-
-        <!-- Password Field -->
         <div class="form-group">
           <label for="password">
             <i class="fa-solid fa-lock"></i>
@@ -161,8 +147,6 @@
             errors.password
           }}</span>
         </div>
-
-        <!-- Confirm Password Field (Register Mode Only) -->
         <div *ngIf="!isLoginMode" class="form-group">
           <label for="confirmPassword">
             <i class="fa-solid fa-lock"></i>
@@ -196,10 +180,7 @@
             errors.confirmPassword
           }}</span>
         </div>
-
-        <!-- Form Options -->
         <div class="form-options">
-          <!-- Login Mode Options -->
           <div *ngIf="isLoginMode" class="login-options">
             <label class="checkbox-item">
               <input type="checkbox" />
@@ -208,8 +189,6 @@
             </label>
             <a href="#" class="forgot-password">Forgot Password?</a>
           </div>
-
-          <!-- Register Mode Options -->
           <div *ngIf="!isLoginMode" class="register-options">
             <label class="checkbox-item">
               <input type="checkbox" />
@@ -223,8 +202,6 @@
             </label>
           </div>
         </div>
-
-        <!-- Submit Button -->
         <button type="submit" class="auth-btn">
           <i
             [class]="
@@ -234,13 +211,9 @@
           {{ isLoginMode ? "Sign In" : "Create Account" }}
         </button>
       </form>
-
-      <!-- Divider -->
       <div class="auth-divider">
         <span>or</span>
       </div>
-
-      <!-- Social Login -->
       <div class="social-auth">
         <button class="social-btn google-btn" (click)="onSocialLogin('google')">
           <i class="fa-brands fa-google"></i>
@@ -254,8 +227,6 @@
           {{ isLoginMode ? "Continue with Facebook" : "Sign up with Facebook" }}
         </button>
       </div>
-
-      <!-- Footer -->
       <div class="auth-footer">
         <p>
           {{

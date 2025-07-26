@@ -2,9 +2,7 @@
   <div *ngIf="loading" class="spinner-container">
     <div class="spinner"></div>
   </div>
-
   <div *ngIf="!loading" class="fade-in dashboard-content">
-    <!-- Header -->
     <div class="dashboard-header">
       <div class="header-content">
         <h1><i class="fa-solid fa-crown"></i> Admin Dashboard</h1>
@@ -24,8 +22,6 @@
         </button>
       </div>
     </div>
-
-    <!-- Stats Cards -->
     <div class="stats-grid">
       <div class="stat-card">
         <div class="stat-icon users">
@@ -40,7 +36,6 @@
           </span>
         </div>
       </div>
-
       <div class="stat-card">
         <div class="stat-icon products">
           <i class="fa-solid fa-box"></i>
@@ -54,7 +49,6 @@
           </span>
         </div>
       </div>
-
       <div class="stat-card">
         <div class="stat-icon orders">
           <i class="fa-solid fa-shopping-cart"></i>
@@ -68,7 +62,6 @@
           </span>
         </div>
       </div>
-
       <div class="stat-card">
         <div class="stat-icon revenue">
           <i class="fa-solid fa-dollar-sign"></i>
@@ -83,8 +76,6 @@
         </div>
       </div>
     </div>
-
-    <!-- Tabs Navigation -->
     <div class="dashboard-tabs">
       <button
         class="tab-button"
@@ -119,13 +110,9 @@
         Users
       </button>
     </div>
-
-    <!-- Tab Content -->
     <div class="tab-content">
-      <!-- Overview Tab -->
       <div *ngIf="tab === 'overview'" class="tab-panel active">
         <div class="overview-grid">
-          <!-- Recent Orders -->
           <div class="overview-card">
             <div class="card-header">
               <h3>
@@ -161,8 +148,6 @@
               </div>
             </div>
           </div>
-
-          <!-- Recent Users -->
           <div class="overview-card">
             <div class="card-header">
               <h3>
@@ -207,8 +192,6 @@
           </div>
         </div>
       </div>
-
-      <!-- Products Tab -->
       <div *ngIf="tab === 'products'" class="tab-panel active">
         <div class="products-management">
           <div class="section-header">
@@ -218,8 +201,6 @@
               Add New Product
             </button>
           </div>
-
-          <!-- Search and Filter -->
           <div class="filters-section">
             <div class="search-filter-row">
               <input
@@ -239,8 +220,6 @@
                 <option value="electronics">Electronics</option>
               </select>
             </div>
-
-            <!-- Bulk Actions -->
             <div *ngIf="selectedProducts.size > 0" class="bulk-actions">
               <span class="selected-count"
                 >{{ selectedProducts.size }} products selected</span
@@ -255,7 +234,6 @@
               </button>
             </div>
           </div>
-
           <div class="products-table">
             <div *ngIf="filteredProducts.length === 0" class="placeholder-text">
               <i class="fa-solid fa-box"></i>
@@ -265,9 +243,7 @@
                   : "No products found"
               }}
             </div>
-
             <div *ngIf="filteredProducts.length > 0" class="products-grid">
-              <!-- Select All Checkbox -->
               <div class="select-all-row">
                 <label class="checkbox-label">
                   <input
@@ -282,7 +258,6 @@
                   Select All ({{ filteredProducts.length }})
                 </label>
               </div>
-
               <div
                 *ngFor="let product of paginatedProducts"
                 class="product-card"
@@ -350,8 +325,6 @@
                 </div>
               </div>
             </div>
-
-            <!-- Pagination -->
             <div *ngIf="totalPages > 1" class="pagination">
               <button
                 class="btn btn-sm btn-outline"
@@ -361,7 +334,6 @@
                 <i class="fa-solid fa-chevron-left"></i>
                 Previous
               </button>
-
               <div class="page-numbers">
                 <button
                   *ngFor="let page of pageNumbers"
@@ -372,7 +344,6 @@
                   {{ page }}
                 </button>
               </div>
-
               <button
                 class="btn btn-sm btn-outline"
                 [disabled]="currentPage === totalPages"
@@ -385,8 +356,6 @@
           </div>
         </div>
       </div>
-
-      <!-- Orders Tab -->
       <div *ngIf="tab === 'orders'" class="tab-panel active">
         <div class="orders-management">
           <div class="section-header">
@@ -411,8 +380,6 @@
               </select>
             </div>
           </div>
-
-          <!-- Bulk Actions -->
           <div *ngIf="selectedOrders.size > 0" class="bulk-actions">
             <span class="selected-count"
               >{{ selectedOrders.size }} orders selected</span
@@ -426,7 +393,6 @@
               <option value="cancelled">Cancelled</option>
             </select>
           </div>
-
           <div class="orders-table">
             <div *ngIf="filteredOrders.length === 0" class="placeholder-text">
               <i class="fa-solid fa-shopping-cart"></i>
@@ -434,9 +400,7 @@
                 allOrders.length === 0 ? "Loading orders..." : "No orders found"
               }}
             </div>
-
             <div *ngIf="filteredOrders.length > 0" class="orders-list">
-              <!-- Select All Checkbox -->
               <div class="select-all-row">
                 <label class="checkbox-label">
                   <input
@@ -451,7 +415,6 @@
                   Select All ({{ filteredOrders.length }})
                 </label>
               </div>
-
               <div *ngFor="let order of paginatedOrders" class="order-card">
                 <div class="order-selection">
                   <label class="checkbox-label">
@@ -507,8 +470,6 @@
                 </div>
               </div>
             </div>
-
-            <!-- Pagination -->
             <div *ngIf="totalPages > 1" class="pagination">
               <button
                 class="btn btn-sm btn-outline"
@@ -518,7 +479,6 @@
                 <i class="fa-solid fa-chevron-left"></i>
                 Previous
               </button>
-
               <div class="page-numbers">
                 <button
                   *ngFor="let page of pageNumbers"
@@ -529,7 +489,6 @@
                   {{ page }}
                 </button>
               </div>
-
               <button
                 class="btn btn-sm btn-outline"
                 [disabled]="currentPage === totalPages"
@@ -542,8 +501,6 @@
           </div>
         </div>
       </div>
-
-      <!-- Users Tab -->
       <div *ngIf="tab === 'users'" class="tab-panel active">
         <div class="users-management">
           <div class="section-header">
@@ -566,8 +523,6 @@
               </select>
             </div>
           </div>
-
-          <!-- Bulk Actions -->
           <div *ngIf="selectedUsers.size > 0" class="bulk-actions">
             <span class="selected-count"
               >{{ selectedUsers.size }} users selected</span
@@ -581,7 +536,6 @@
               Delete Selected
             </button>
           </div>
-
           <div class="users-table">
             <div *ngIf="filteredUsers.length === 0" class="placeholder-text">
               <i class="fa-solid fa-users"></i>
@@ -589,9 +543,7 @@
                 allUsers.length === 0 ? "Loading users..." : "No users found"
               }}
             </div>
-
             <div *ngIf="filteredUsers.length > 0" class="users-list">
-              <!-- Select All Checkbox -->
               <div class="select-all-row">
                 <label class="checkbox-label">
                   <input
@@ -606,7 +558,6 @@
                   Select All ({{ filteredUsers.length }})
                 </label>
               </div>
-
               <div *ngFor="let user of paginatedUsers" class="user-card">
                 <div class="user-selection">
                   <label class="checkbox-label">
@@ -657,8 +608,6 @@
                 </div>
               </div>
             </div>
-
-            <!-- Pagination -->
             <div *ngIf="totalPages > 1" class="pagination">
               <button
                 class="btn btn-sm btn-outline"
@@ -668,7 +617,6 @@
                 <i class="fa-solid fa-chevron-left"></i>
                 Previous
               </button>
-
               <div class="page-numbers">
                 <button
                   *ngFor="let page of pageNumbers"
@@ -679,7 +627,6 @@
                   {{ page }}
                 </button>
               </div>
-
               <button
                 class="btn btn-sm btn-outline"
                 [disabled]="currentPage === totalPages"
@@ -694,8 +641,6 @@
       </div>
     </div>
   </div>
-
-  <!-- Add Product Modal -->
   <div
     *ngIf="showAddProductModal"
     class="modal-overlay"
@@ -726,7 +671,6 @@
               <span *ngIf="addProductForm.get('title')?.errors?.['maxlength']">Title cannot exceed 100 characters</span>
             </div>
           </div>
-          
           <div class="form-group">
             <label for="productPrice">Price *</label>
             <input
@@ -745,7 +689,6 @@
               <span *ngIf="addProductForm.get('price')?.errors?.['max']">Price cannot exceed 10000</span>
             </div>
           </div>
-          
           <div class="form-group">
             <label for="productCategory">Category *</label>
             <select
@@ -764,7 +707,6 @@
               <span *ngIf="addProductForm.get('category')?.errors?.['required']">Category is required</span>
             </div>
           </div>
-          
           <div class="form-group">
             <label for="productDescription">Description</label>
             <textarea
@@ -779,7 +721,6 @@
               <span *ngIf="addProductForm.get('description')?.errors?.['maxlength']">Description cannot exceed 500 characters</span>
             </div>
           </div>
-          
           <div class="form-group">
             <label for="productImage">Image URL</label>
             <input
@@ -794,7 +735,6 @@
               <span *ngIf="addProductForm.get('image')?.errors?.['pattern']">Please enter a valid URL</span>
             </div>
           </div>
-          
           <div class="modal-actions">
             <button type="button" class="btn btn-outline" (click)="closeAddProductModal()">
               Cancel

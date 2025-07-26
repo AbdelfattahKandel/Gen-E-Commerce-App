@@ -11,8 +11,7 @@ export interface AnalyticsEvent {
   timestamp: Date;
 }
 
-// Declare gtag for TypeScript
-declare global {
+  declare global {
   interface Window {
     gtag?: (command: string, targetId: string, config?: any) => void;
   }
@@ -80,10 +79,10 @@ export class AnalyticsService {
   }
 
   private sendToAnalytics(event: AnalyticsEvent): void {
-    // In a real application, you would send this to Google Analytics, Mixpanel, etc.
+
     console.log('Analytics Event:', event);
-    
-    // Example: Google Analytics 4
+
+
     if (typeof window !== 'undefined' && window.gtag) {
       window.gtag('event', event.action, {
         event_category: event.category,

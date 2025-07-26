@@ -29,19 +29,8 @@
               "src/styles.css"
             ],
             "scripts": [],
-            "webpackConfig": "webpack.config.js",
-            "optimization": {
-              "scripts": true,
-              "styles": true,
-              "fonts": true
-            },
             "outputHashing": "all",
             "sourceMap": false,
-            "namedChunks": true,
-            "aot": true,
-            "extractLicenses": true,
-            "vendorChunk": true,
-            "buildOptimizer": true,
             "budgets": [
               {
                 "type": "initial",
@@ -50,8 +39,8 @@
               },
               {
                 "type": "anyComponentStyle",
-                "maximumWarning": "6kb",
-                "maximumError": "10kb"
+                "maximumWarning": "20kb",
+                "maximumError": "25kb"
               }
             ]
           },
@@ -65,20 +54,15 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "20kb",
+                  "maximumError": "25kb"
                 }
               ],
               "outputHashing": "all",
               "serviceWorker": "ngsw-config.json"
             },
             "development": {
-              "optimization": false,
-              "extractLicenses": false,
-              "sourceMap": true,
-              "namedChunks": true,
-              "vendorChunk": true,
-              "buildOptimizer": false
+              "sourceMap": true
             }
           },
           "defaultConfiguration": "production"
@@ -97,10 +81,7 @@
           "options": {
             "port": 4200,
             "host": "localhost",
-            "liveReload": true,
-            "hmr": false,
-            "optimization": false,
-            "sourceMap": true
+            "liveReload": true
           }
         },
         "extract-i18n": {

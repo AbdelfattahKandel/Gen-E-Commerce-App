@@ -11,11 +11,10 @@ import { CartItem } from '../models/product.interface';
 export class UserService {
   private apiUrl = 'https://fakestoreapi.com';
 
-  // Mock orders data with real user associations
   private mockOrders: Order[] = [
     {
       id: 1,
-      userId: 1, // عبدالفتاح 
+      userId: 1,
       date: new Date('2024-01-15').toISOString(),
       products: [
         { productId: 1, quantity: 2 },
@@ -26,7 +25,7 @@ export class UserService {
     },
     {
       id: 2,
-      userId: 2, // طارق رمضان
+      userId: 2,
       date: new Date('2024-01-20').toISOString(),
       products: [
         { productId: 5, quantity: 1 },
@@ -37,7 +36,7 @@ export class UserService {
     },
     {
       id: 3,
-      userId: 3, // علي عبدالفتاح
+      userId: 3,
       date: new Date('2024-01-25').toISOString(),
       products: [
         { productId: 2, quantity: 1 },
@@ -49,7 +48,7 @@ export class UserService {
     },
     {
       id: 4,
-      userId: 1, // عبدالفتاح 
+      userId: 1,
       date: new Date('2024-02-01').toISOString(),
       products: [{ productId: 8, quantity: 1 }],
       total: 89.99,
@@ -57,7 +56,7 @@ export class UserService {
     },
     {
       id: 5,
-      userId: 2, // طارق رمضان
+      userId: 2,
       date: new Date('2024-02-05').toISOString(),
       products: [
         { productId: 9, quantity: 2 },
@@ -68,7 +67,7 @@ export class UserService {
     },
     {
       id: 6,
-      userId: 3, // علي عبدالفتاح
+      userId: 3,
       date: new Date('2024-02-10').toISOString(),
       products: [
         { productId: 11, quantity: 1 },
@@ -79,7 +78,7 @@ export class UserService {
     },
     {
       id: 7,
-      userId: 1, // عبدالفتاح 
+      userId: 1,
       date: new Date('2024-02-15').toISOString(),
       products: [{ productId: 13, quantity: 3 }],
       total: 269.97,
@@ -87,7 +86,7 @@ export class UserService {
     },
     {
       id: 8,
-      userId: 2, // طارق رمضان
+      userId: 2,
       date: new Date('2024-02-20').toISOString(),
       products: [
         { productId: 14, quantity: 1 },
@@ -103,25 +102,21 @@ export class UserService {
   private handleError(error: HttpErrorResponse) {
     let errorMessage = 'An error occurred';
     if (error.error instanceof ErrorEvent) {
-      // Client-side error
       errorMessage = error.error.message;
     } else {
-      // Server-side error
       errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
     }
     console.error(errorMessage);
     return throwError(() => new Error(errorMessage));
   }
 
-  // Transform API user data to include role and filter to only real users
   private transformUserData(user: any): User {
     return {
       ...user,
-      role: user.id <= 3 ? 'admin' : 'user', // First 3 users are admins
+      role: user.id <= 3 ? 'admin' : 'user',
     };
   }
 
-  // Get only real users (عبدالفتاح، طارق، علي)
   private getRealUsers(): User[] {
     return [
       {
@@ -194,7 +189,6 @@ export class UserService {
   }
 
   getUserProfile(userId: number): Observable<User> {
-    // Get user from real users data
     const realUsers = this.getRealUsers();
     const user = realUsers.find((u) => u.id === userId);
     if (user) {
@@ -204,19 +198,16 @@ export class UserService {
   }
 
   updateUserProfile(userId: number, userData: Partial<User>): Observable<User> {
-    // Update user in real users data
     const realUsers = this.getRealUsers();
     const userIndex = realUsers.findIndex((u) => u.id === userId);
     if (userIndex !== -1) {
       const updatedUser = { ...realUsers[userIndex], ...userData };
-      // In a real app, you would save this to a database
       return of(updatedUser);
     }
     return throwError(() => new Error('User not found'));
   }
 
   getUserOrders(userId: number): Observable<Order[]> {
-    // Return mock orders for the specific user
     const userOrders = this.mockOrders.filter(
       (order) => order.userId === userId
     );
@@ -244,22 +235,17 @@ export class UserService {
   }
 
   getAllUsers(): Observable<User[]> {
-    // Return only real users instead of fake API data
     return of(this.getRealUsers());
   }
 
   deleteUser(userId: number): Observable<void> {
-    // Remove user's orders from mock data
     this.mockOrders = this.mockOrders.filter(
       (order) => order.userId !== userId
     );
-    // In a real app, you would delete the user from database
-    // For now, we just return success since we're using static data
     return of(void 0);
   }
 
   getAllOrders(): Observable<Order[]> {
-    // Return all mock orders
     return of([...this.mockOrders]);
   }
 

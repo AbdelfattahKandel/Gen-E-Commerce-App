@@ -2,11 +2,8 @@
   <div *ngIf="loading" class="spinner-container">
     <div class="spinner"></div>
   </div>
-
   <div *ngIf="!loading && product" class="fade-in checkout-content">
-    <!-- Product Layout -->
     <div class="product-layout">
-      <!-- Product Image Section -->
       <div class="product-image-section">
         <img [src]="product.image" [alt]="product.title" class="main-image" />
         <div class="thumbnail-grid">
@@ -20,13 +17,9 @@
           <img [src]="product.image" [alt]="product.title" class="thumbnail" />
         </div>
       </div>
-
-      <!-- Product Info Section -->
       <div class="product-info-section">
         <h1 class="product-title">{{ product.title }}</h1>
         <p class="product-description">{{ product.description }}</p>
-
-        <!-- Product Meta -->
         <div class="product-meta">
           <div class="meta-item">
             <i class="fa-solid fa-tag"></i>
@@ -46,8 +39,6 @@
             <span>In Stock</span>
           </div>
         </div>
-
-        <!-- Price Section -->
         <div class="price-section">
           <div class="price">${{ product.price | number : "1.2-2" }}</div>
           <div class="stars">
@@ -63,8 +54,6 @@
             </ng-container>
           </div>
         </div>
-
-        <!-- Quantity Section -->
         <div class="quantity-section">
           <span class="quantity-label">Quantity:</span>
           <div class="quantity-controls">
@@ -85,8 +74,6 @@
             </button>
           </div>
         </div>
-
-        <!-- Action Buttons -->
         <div class="action-buttons">
           <button
             class="btn btn-primary"
@@ -107,8 +94,6 @@
         </div>
       </div>
     </div>
-
-    <!-- Product Details Tabs -->
     <div class="product-details-tabs">
       <div class="tab-header">
         <button class="tab-button active">Description</button>
@@ -176,8 +161,6 @@
         </div>
       </div>
     </div>
-
-    <!-- Related Products -->
     <div class="related-products" *ngIf="relatedProducts.length > 0">
       <h3>Related Products</h3>
       <div class="related-grid">
@@ -199,8 +182,6 @@
       </div>
     </div>
   </div>
-
-  <!-- Error State -->
   <div *ngIf="!loading && !product" class="error-state">
     <div class="error-content">
       <i class="fa-solid fa-exclamation-triangle"></i>

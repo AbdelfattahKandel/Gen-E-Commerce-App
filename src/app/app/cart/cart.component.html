@@ -2,9 +2,7 @@
   <div *ngIf="loading" class="spinner-container">
     <div class="spinner"></div>
   </div>
-
   <div *ngIf="!loading" class="fade-in">
-    <!-- Cart Header -->
     <div class="cart-header mb-8">
       <h1 class="text-3xl font-bold text-gray-800">
         <i class="fa-solid fa-cart-shopping mr-3"></i>
@@ -15,8 +13,6 @@
         your cart
       </p>
     </div>
-
-    <!-- Empty Cart -->
     <div *ngIf="isCartEmpty()" class="empty-cart text-center py-16">
       <div class="empty-cart-icon mb-6">
         <i class="fa-solid fa-cart-plus text-6xl text-gray-300"></i>
@@ -32,11 +28,8 @@
         Start Shopping
       </a>
     </div>
-
-    <!-- Cart Items -->
     <div *ngIf="!isCartEmpty()" class="cart-content">
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <!-- Cart Items List -->
         <div class="lg:col-span-2">
           <div class="cart-items">
             <div
@@ -44,7 +37,6 @@
               class="cart-item bg-white rounded-lg shadow-md p-6 mb-4"
             >
               <div class="flex items-center gap-4">
-                <!-- Product Image -->
                 <div class="product-image">
                   <img
                     [src]="item.product.image"
@@ -52,8 +44,6 @@
                     class="w-20 h-20 object-cover rounded-lg"
                   />
                 </div>
-
-                <!-- Product Info -->
                 <div class="product-info flex-1">
                   <h3 class="text-lg font-semibold text-gray-800 mb-2">
                     {{ item.product.title }}
@@ -72,8 +62,6 @@
                     </div>
                   </div>
                 </div>
-
-                <!-- Quantity Controls -->
                 <div class="quantity-controls flex items-center gap-3">
                   <button
                     class="quantity-btn"
@@ -91,8 +79,6 @@
                     <i class="fa-solid fa-plus"></i>
                   </button>
                 </div>
-
-                <!-- Price -->
                 <div class="price-info text-right">
                   <div class="item-price text-xl font-bold text-primary">
                     ${{ getItemTotal(item) | number : "1.2-2" }}
@@ -101,8 +87,6 @@
                     ${{ item.product.price | number : "1.2-2" }} each
                   </div>
                 </div>
-
-                <!-- Remove Button -->
                 <button
                   class="remove-btn"
                   (click)="removeFromCart(item.product.id)"
@@ -113,8 +97,6 @@
               </div>
             </div>
           </div>
-
-          <!-- Clear Cart Button -->
           <div class="cart-actions mt-6">
             <button class="btn btn-outline btn-danger" (click)="clearCart()">
               <i class="fa-solid fa-trash mr-2"></i>
@@ -122,13 +104,9 @@
             </button>
           </div>
         </div>
-
-        <!-- Cart Summary -->
         <div class="cart-summary">
           <div class="summary-card bg-white rounded-lg shadow-md p-6">
             <h2 class="text-xl font-bold text-gray-800 mb-6">Order Summary</h2>
-
-            <!-- Summary Items -->
             <div class="summary-items space-y-3 mb-6">
               <div class="summary-item flex justify-between">
                 <span class="text-gray-600"
@@ -149,8 +127,6 @@
                 >
               </div>
             </div>
-
-            <!-- Total -->
             <div class="total-section border-t pt-4 mb-6">
               <div class="total flex justify-between items-center">
                 <span class="text-xl font-bold text-gray-800">Total</span>
@@ -159,8 +135,6 @@
                 </span>
               </div>
             </div>
-
-            <!-- Checkout Button -->
             <button
               class="btn btn-primary btn-lg w-full mb-4"
               [routerLink]="['/checkout']"
@@ -169,8 +143,6 @@
               <i class="fa-solid fa-credit-card mr-2"></i>
               Proceed to Checkout
             </button>
-
-            <!-- Continue Shopping -->
             <a routerLink="/products" class="btn btn-outline w-full">
               <i class="fa-solid fa-arrow-left mr-2"></i>
               Continue Shopping
@@ -181,8 +153,6 @@
     </div>
   </div>
 </div>
-
-<!-- Styles -->
 <style>
   .spinner-container {
     min-height: 60vh;
@@ -190,7 +160,6 @@
     align-items: center;
     justify-content: center;
   }
-
   .spinner {
     width: 3rem;
     height: 3rem;
@@ -199,17 +168,14 @@
     border-radius: 50%;
     animation: spin 0.8s linear infinite;
   }
-
   @keyframes spin {
     to {
       transform: rotate(360deg);
     }
   }
-
   .fade-in {
     animation: fadeIn 0.5s ease-in;
   }
-
   @keyframes fadeIn {
     from {
       opacity: 0;
@@ -220,7 +186,6 @@
       transform: translateY(0);
     }
   }
-
   .quantity-btn {
     width: 32px;
     height: 32px;
@@ -234,24 +199,20 @@
     cursor: pointer;
     transition: all 0.2s;
   }
-
   .quantity-btn:hover:not(:disabled) {
     background: #f3f4f6;
     border-color: #9ca3af;
   }
-
   .quantity-btn:disabled {
     opacity: 0.5;
     cursor: not-allowed;
   }
-
   .quantity-display {
     min-width: 40px;
     text-align: center;
     font-weight: 600;
     color: #374151;
   }
-
   .remove-btn {
     width: 40px;
     height: 40px;
@@ -265,55 +226,44 @@
     cursor: pointer;
     transition: all 0.2s;
   }
-
   .remove-btn:hover {
     background: #fecaca;
     border-color: #fca5a5;
   }
-
   .btn-danger {
     color: #dc2626;
     border-color: #dc2626;
   }
-
   .btn-danger:hover {
     background: #dc2626;
     color: white;
   }
-
   .empty-cart-icon {
     opacity: 0.6;
   }
-
   .cart-item {
     transition: transform 0.2s, box-shadow 0.2s;
   }
-
   .cart-item:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
   }
-
   .summary-card {
     position: sticky;
     top: 2rem;
   }
-
   @media (max-width: 768px) {
     .cart-item .flex {
       flex-direction: column;
       align-items: flex-start;
       gap: 1rem;
     }
-
     .quantity-controls {
       align-self: center;
     }
-
     .price-info {
       align-self: flex-end;
     }
-
     .remove-btn {
       align-self: flex-end;
     }

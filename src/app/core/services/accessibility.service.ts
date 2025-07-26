@@ -42,28 +42,28 @@ export class AccessibilityService {
   private applySettings(): void {
     const root = document.documentElement;
 
-    // Apply high contrast
+
     if (this.settings.highContrast) {
       root.classList.add('high-contrast');
     } else {
       root.classList.remove('high-contrast');
     }
 
-    // Apply large text
+
     if (this.settings.largeText) {
       root.classList.add('large-text');
     } else {
       root.classList.remove('large-text');
     }
 
-    // Apply reduced motion
+
     if (this.settings.reducedMotion) {
       root.classList.add('reduced-motion');
     } else {
       root.classList.remove('reduced-motion');
     }
 
-    // Apply focus indicator
+
     if (this.settings.focusIndicator) {
       root.classList.add('focus-visible');
     } else {
@@ -150,7 +150,7 @@ export class AccessibilityService {
   validateFormAccessibility(form: HTMLFormElement): string[] {
     const issues: string[] = [];
 
-    // Check for labels
+
     const inputs = form.querySelectorAll('input, select, textarea');
     inputs.forEach((input: Element) => {
       const inputElement = input as HTMLInputElement;
@@ -167,7 +167,7 @@ export class AccessibilityService {
       }
     });
 
-    // Check for error messages
+
     const errorMessages = form.querySelectorAll('[role="alert"]');
     if (errorMessages.length === 0) {
       issues.push('Form is missing error message announcements');
@@ -178,7 +178,7 @@ export class AccessibilityService {
 
   addKeyboardNavigation(): void {
     document.addEventListener('keydown', (event) => {
-      // Escape key to close modals
+
       if (event.key === 'Escape') {
         const modal = document.querySelector('.modal.active, .dropdown.active');
         if (modal) {
@@ -186,7 +186,7 @@ export class AccessibilityService {
         }
       }
 
-      // Tab key navigation
+
       if (event.key === 'Tab') {
         document.body.classList.add('keyboard-navigation');
       }

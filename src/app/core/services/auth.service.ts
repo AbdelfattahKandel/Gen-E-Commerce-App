@@ -13,9 +13,7 @@ export class AuthService {
   private currentUserSubject = new BehaviorSubject<User | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
 
-  // Predefined accounts with better security
   private predefinedAccounts = [
-    // Admin accounts
     {
       email: 'abdelfattah@gen.eg',
       password: 'admin123',
@@ -37,7 +35,7 @@ export class AuthService {
       name: { firstname: 'Ali', lastname: 'Admin' },
       username: 'ali_admin',
     },
-    // User accounts
+
     {
       email: 'abdelfattahuser@gen.eg',
       password: 'user123',
@@ -85,12 +83,10 @@ export class AuthService {
 
   private isValidToken(token: string): boolean {
     try {
-      // Basic token validation - in production, you'd validate JWT properly
       if (!token || token.length < 10) {
         return false;
       }
 
-      // Check if token is expired (if it's a JWT)
       if (token.includes('.')) {
         const payload = JSON.parse(atob(token.split('.')[1]));
         if (payload.exp && payload.exp * 1000 < Date.now()) {
@@ -111,12 +107,10 @@ export class AuthService {
   }
 
   login(credentials: LoginRequest): Observable<User> {
-    // Validate input
     if (!this.validateCredentials(credentials)) {
       return throwError(() => new Error('Invalid credentials format'));
     }
 
-    // Check if it's a predefined account
     const predefinedAccount = this.predefinedAccounts.find(
       (account) =>
         account.email === credentials.email &&
@@ -124,7 +118,6 @@ export class AuthService {
     );
 
     if (predefinedAccount) {
-      // Create user object for predefined account
       const user: User = {
         id: this.predefinedAccounts.indexOf(predefinedAccount) + 1,
         email: predefinedAccount.email,
@@ -145,8 +138,6 @@ export class AuthService {
       this.storeUserData(user, token);
       return of(user);
     }
-
-    // Fallback to API for other accounts
     return this.http
       .post<{ token: string }>(`${this.apiUrl}/auth/login`, credentials)
       .pipe(
@@ -196,7 +187,6 @@ export class AuthService {
   }
 
   private generateSecureToken(): string {
-    // Generate a more secure token
     const timestamp = Date.now();
     const random = Math.random().toString(36).substring(2);
     const userAgent = navigator.userAgent.substring(0, 10);
@@ -208,7 +198,6 @@ export class AuthService {
   }
 
   register(userData: RegisterRequest): Observable<User> {
-    // Validate registration data
     if (!this.validateRegistrationData(userData)) {
       return throwError(() => new Error('Invalid registration data'));
     }
@@ -261,7 +250,6 @@ export class AuthService {
     return token && this.isValidToken(token) ? token : null;
   }
 
-  // Get predefined accounts for display
   getPredefinedAccounts() {
     return this.predefinedAccounts.map((account) => ({
       email: account.email,

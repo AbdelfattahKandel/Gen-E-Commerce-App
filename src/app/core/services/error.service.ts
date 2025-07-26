@@ -30,7 +30,7 @@ export class ErrorService {
     const currentErrors = this.errorsSubject.value;
     this.errorsSubject.next([...currentErrors, error]);
 
-    // Auto-remove errors after 5 seconds
+
     setTimeout(() => {
       this.removeError(error);
     }, 5000);

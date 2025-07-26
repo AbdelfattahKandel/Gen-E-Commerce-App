@@ -2,9 +2,7 @@
   <div *ngIf="loading" class="spinner-container">
     <div class="spinner"></div>
   </div>
-  
   <div *ngIf="!loading" class="fade-in products-container">
-    <!-- Mobile Filter Toggle -->
     <div class="mobile-filter-toggle">
       <button class="filter-toggle-btn" (click)="toggleSidebar()">
         <i class="fa-solid fa-filter"></i>
@@ -12,8 +10,6 @@
         <span class="filter-count" *ngIf="activeFiltersCount > 0">({{ activeFiltersCount }})</span>
       </button>
     </div>
-
-    <!-- Sidebar Filters -->
     <aside class="products-sidebar" [class.sidebar-open]="isSidebarOpen">
       <div class="sidebar-header">
         <h3><i class="fa-solid fa-filter"></i> Filters</h3>
@@ -21,8 +17,6 @@
           <i class="fa-solid fa-times"></i>
         </button>
       </div>
-
-      <!-- Search Section -->
       <div class="filter-section">
         <h4><i class="fa-solid fa-search"></i> Search</h4>
         <div class="search-input-wrapper">
@@ -36,8 +30,6 @@
           <i class="fa-solid fa-search search-icon"></i>
         </div>
       </div>
-
-      <!-- Category Section -->
       <div class="filter-section">
         <h4><i class="fa-solid fa-tags"></i> Category</h4>
         <div class="checkbox-group">
@@ -65,8 +57,6 @@
           </label>
         </div>
       </div>
-
-      <!-- Price Range Section -->
       <div class="filter-section">
         <h4><i class="fa-solid fa-dollar-sign"></i> Price Range</h4>
         <div class="price-slider-container">
@@ -84,8 +74,6 @@
           </div>
         </div>
       </div>
-
-      <!-- Clear Filters Button -->
       <div class="filter-actions">
         <button class="clear-filters-btn" (click)="clearFilters()">
           <i class="fa-solid fa-rotate-left"></i>
@@ -93,8 +81,6 @@
         </button>
       </div>
     </aside>
-
-    <!-- Main Content -->
     <section class="products-main">
       <div class="products-toolbar">
         <div class="toolbar-left">
@@ -111,7 +97,6 @@
           Showing {{ pageStart }}-{{ pageEnd }} of {{ total }} products
         </div>
       </div>
-      
       <div class="products-grid">
         <ng-container *ngFor="let product of pagedProducts">
           <div class="product-card">
@@ -154,8 +139,6 @@
           </div>
         </ng-container>
       </div>
-      
-      <!-- Pagination -->
       <div class="products-pagination">
         <button
           class="btn btn-outline btn-sm"
@@ -201,11 +184,7 @@
     </section>
   </div>
 </div>
-
-<!-- Overlay for mobile sidebar -->
 <div class="sidebar-overlay" *ngIf="isSidebarOpen && isMobile" (click)="toggleSidebar()"></div>
-
-<!-- Spinner Styles -->
 <style>
   .spinner-container {
     min-height: 60vh;

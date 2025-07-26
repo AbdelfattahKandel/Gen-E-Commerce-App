@@ -4,7 +4,7 @@ export const environment = {
   appName: 'Gen Commerce',
   version: '1.0.0',
   enableDebug: true,
-  cacheTimeout: 300000, // 5 minutes
+  cacheTimeout: 300000,
   maxRetries: 3,
   retryDelay: 1000,
 };

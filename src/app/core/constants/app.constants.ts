@@ -1,23 +1,18 @@
 export const APP_CONSTANTS = {
-  // API Configuration
   API_URL: 'https://fakestoreapi.com',
 
-  // Pagination
   DEFAULT_PAGE_SIZE: 12,
   MAX_PAGE_SIZE: 50,
 
-  // Cache Configuration
-  CACHE_TTL: 300000, // 5 minutes
+  CACHE_TTL: 300000,
   PRODUCTS_CACHE_KEY: 'products_cache',
   CATEGORIES_CACHE_KEY: 'categories_cache',
 
-  // Form Validation
   MIN_PRODUCT_TITLE_LENGTH: 3,
   MAX_PRODUCT_TITLE_LENGTH: 100,
   MAX_PRODUCT_DESCRIPTION_LENGTH: 500,
   MAX_PRODUCT_PRICE: 10000,
 
-  // Order Status
   ORDER_STATUSES: {
     PENDING: 'pending',
     PROCESSING: 'processing',
@@ -26,13 +21,11 @@ export const APP_CONSTANTS = {
     CANCELLED: 'cancelled',
   } as const,
 
-  // User Roles
   USER_ROLES: {
     ADMIN: 'admin',
     USER: 'user',
   } as const,
 
-  // Error Messages
   ERROR_MESSAGES: {
     REQUIRED_FIELD: 'This field is required',
     INVALID_EMAIL: 'Please enter a valid email address',
@@ -49,7 +42,6 @@ export const APP_CONSTANTS = {
     VALIDATION_ERROR: 'Please check your input and try again.',
   },
 
-  // Success Messages
   SUCCESS_MESSAGES: {
     PRODUCT_ADDED: 'Product added successfully!',
     PRODUCT_UPDATED: 'Product updated successfully!',
@@ -62,7 +54,6 @@ export const APP_CONSTANTS = {
     LOGOUT_SUCCESS: 'Logout successful!',
   },
 
-  // Local Storage Keys
   STORAGE_KEYS: {
     CURRENT_USER: 'currentUser',
     TOKEN: 'token',
@@ -70,20 +61,17 @@ export const APP_CONSTANTS = {
     THEME: 'theme',
   },
 
-  // Theme Configuration
   THEMES: {
     LIGHT: 'light',
     DARK: 'dark',
   } as const,
 
-  // Animation Durations
   ANIMATION_DURATIONS: {
     FAST: 150,
     NORMAL: 300,
     SLOW: 500,
   },
 
-  // Loading States
   LOADING_STATES: {
     PRODUCTS: 'products',
     CATEGORIES: 'categories',

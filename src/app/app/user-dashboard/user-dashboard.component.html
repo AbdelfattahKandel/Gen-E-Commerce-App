@@ -2,9 +2,7 @@
   <div *ngIf="loading" class="spinner-container">
     <div class="spinner"></div>
   </div>
-
   <div *ngIf="!loading" class="fade-in dashboard-content">
-    <!-- Header -->
     <div class="dashboard-header">
       <div class="header-content">
         <h1><i class="fa-solid fa-user"></i> User Dashboard</h1>
@@ -24,8 +22,6 @@
         </button>
       </div>
     </div>
-
-    <!-- Stats Cards -->
     <div class="stats-grid">
       <div class="stat-card">
         <div class="stat-icon orders">
@@ -40,7 +36,6 @@
           </span>
         </div>
       </div>
-
       <div class="stat-card">
         <div class="stat-icon spent">
           <i class="fa-solid fa-dollar-sign"></i>
@@ -54,7 +49,6 @@
           </span>
         </div>
       </div>
-
       <div class="stat-card">
         <div class="stat-icon wishlist">
           <i class="fa-solid fa-heart"></i>
@@ -68,7 +62,6 @@
           </span>
         </div>
       </div>
-
       <div class="stat-card">
         <div class="stat-icon reviews">
           <i class="fa-solid fa-star"></i>
@@ -83,8 +76,6 @@
         </div>
       </div>
     </div>
-
-    <!-- Tabs Navigation -->
     <div class="dashboard-tabs">
       <button
         class="tab-button"
@@ -119,13 +110,9 @@
         Profile
       </button>
     </div>
-
-    <!-- Tab Content -->
     <div class="tab-content">
-      <!-- Overview Tab -->
       <div *ngIf="tab === 'overview'" class="tab-panel active">
         <div class="overview-grid">
-          <!-- Recent Orders -->
           <div class="overview-card">
             <div class="card-header">
               <h3><i class="fa-solid fa-clock"></i> Recent Orders</h3>
@@ -157,8 +144,6 @@
               </div>
             </div>
           </div>
-
-          <!-- Quick Actions -->
           <div class="overview-card">
             <div class="card-header">
               <h3><i class="fa-solid fa-bolt"></i> Quick Actions</h3>
@@ -186,8 +171,6 @@
           </div>
         </div>
       </div>
-
-      <!-- Orders Tab -->
       <div *ngIf="tab === 'orders'" class="tab-panel active">
         <div class="orders-management">
           <div class="section-header">
@@ -235,8 +218,6 @@
           </div>
         </div>
       </div>
-
-      <!-- Wishlist Tab -->
       <div *ngIf="tab === 'wishlist'" class="tab-panel active">
         <div class="wishlist-management">
           <div class="section-header">
@@ -279,8 +260,6 @@
           </div>
         </div>
       </div>
-
-      <!-- Profile Tab -->
       <div *ngIf="tab === 'profile'" class="tab-panel active">
         <div class="profile-management">
           <div class="section-header">

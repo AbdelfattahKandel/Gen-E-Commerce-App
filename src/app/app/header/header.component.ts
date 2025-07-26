@@ -16,7 +16,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   showMobileNav = false;
   currentUser: User | null = null;
   cartItemCount = 0;
-  
+
   private userSubscription: Subscription | undefined;
   private cartSubscription: Subscription | undefined;
 
@@ -27,13 +27,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    // Subscribe to user changes
-    this.userSubscription = this.authService.currentUser$.subscribe(user => {
+    this.userSubscription = this.authService.currentUser$.subscribe((user) => {
       this.currentUser = user;
     });
 
-    // Subscribe to cart changes
-    this.cartSubscription = this.cartService.cartItems$.subscribe(items => {
+    this.cartSubscription = this.cartService.cartItems$.subscribe((items) => {
       this.cartItemCount = this.cartService.getCartItemCount();
     });
   }

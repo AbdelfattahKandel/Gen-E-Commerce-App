@@ -63,7 +63,7 @@ export class ProductDetailsComponent implements OnInit {
   private loadRelatedProducts(category: string) {
     this.productService.getProductsByCategory(category).subscribe({
       next: (products) => {
-        // Get 4 related products, excluding current product
+
         this.relatedProducts = products
           .filter((p) => p.id !== this.product?.id)
           .slice(0, 4);

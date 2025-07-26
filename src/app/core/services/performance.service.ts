@@ -18,8 +18,7 @@ export interface PageLoadMetrics {
   timestamp: Date;
 }
 
-// Declare gtag for TypeScript
-declare global {
+  declare global {
   interface Window {
     gtag?: (command: string, targetId: string, config?: any) => void;
   }
@@ -37,14 +36,14 @@ export class PerformanceService {
   }
 
   private initializePerformanceMonitoring(): void {
-    // Monitor page loads
+
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe(() => {
         this.measurePageLoad();
       });
 
-    // Monitor Core Web Vitals
+
     this.monitorCoreWebVitals();
   }
 
@@ -76,13 +75,13 @@ export class PerformanceService {
 
   private monitorCoreWebVitals(): void {
     if (typeof window !== 'undefined') {
-      // Monitor Largest Contentful Paint (LCP)
+
       this.observeLCP();
 
-      // Monitor First Input Delay (FID)
+
       this.observeFID();
 
-      // Monitor Cumulative Layout Shift (CLS)
+
       this.observeCLS();
     }
   }
@@ -109,7 +108,7 @@ export class PerformanceService {
       const observer = new PerformanceObserver((list) => {
         const entries = list.getEntries();
         entries.forEach((entry) => {
-          // Cast to FirstInputEntry to access processingStart
+
           const firstInputEntry = entry as any;
           if (firstInputEntry.processingStart) {
             this.logPerformanceMetric(
@@ -213,10 +212,10 @@ export class PerformanceService {
   }
 
   private sendToAnalytics(metric: PerformanceMetric): void {
-    // In a real application, you would send this to your analytics service
+
     console.log('Performance Metric:', metric);
 
-    // Example: Send to Google Analytics
+
     if (typeof window !== 'undefined' && window.gtag) {
       window.gtag('event', 'performance_metric', {
         metric_name: metric.name,

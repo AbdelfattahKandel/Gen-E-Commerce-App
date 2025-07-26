@@ -34,17 +34,17 @@ export class ProductService {
   private handleError(error: HttpErrorResponse) {
     let errorMessage = 'An error occurred';
     if (error.error instanceof ErrorEvent) {
-      // Client-side error
+
       errorMessage = error.error.message;
     } else {
-      // Server-side error
+
       errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
     }
     console.error(errorMessage);
     return throwError(() => new Error(errorMessage));
   }
 
-  // Transform API product data to ensure consistency
+
   private transformProductData(product: any): Product {
     return {
       id: product.id,
@@ -60,7 +60,7 @@ export class ProductService {
     };
   }
 
-  // Get products with pagination and caching
+
   getProducts(
     page: number = 1,
     limit: number = 10,
@@ -77,7 +77,7 @@ export class ProductService {
     );
   }
 
-  // Get all products with caching
+
   getAllProducts(): Observable<Product[]> {
     if (!this.productsCache$) {
       this.productsCache$ = this.http
@@ -111,7 +111,7 @@ export class ProductService {
       );
   }
 
-  // Get categories with caching
+
   getAllCategories(): Observable<string[]> {
     if (!this.categoriesCache$) {
       this.categoriesCache$ = this.http
@@ -149,7 +149,7 @@ export class ProductService {
     );
   }
 
-  // Additional utility methods
+
   searchProducts(query: string): Observable<Product[]> {
     return this.getAllProducts().pipe(
       map((products) =>
@@ -192,14 +192,14 @@ export class ProductService {
 
     let filteredProducts = products;
 
-    // Category filter
+
     if (filters.category) {
       filteredProducts = filteredProducts.filter(
         (p) => p.category === filters.category
       );
     }
 
-    // Search filter
+
     if (filters.search) {
       const searchTerm = filters.search.toLowerCase();
       filteredProducts = filteredProducts.filter(
@@ -209,7 +209,7 @@ export class ProductService {
       );
     }
 
-    // Price filters
+
     if (filters.minPrice !== undefined) {
       filteredProducts = filteredProducts.filter(
         (p) => p.price >= filters.minPrice!
@@ -221,7 +221,7 @@ export class ProductService {
       );
     }
 
-    // Sorting
+
     if (filters.sortBy) {
       filteredProducts.sort((a, b) => {
         let aValue: any, bValue: any;
@@ -276,7 +276,7 @@ export class ProductService {
     };
   }
 
-  // Clear cache when needed
+
   clearCache(): void {
     this.productsCache$ = null;
     this.categoriesCache$ = null;

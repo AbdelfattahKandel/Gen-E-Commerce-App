@@ -25,21 +25,21 @@ export class ProductsComponent implements OnInit, OnDestroy {
   filteredProducts: Product[] = [];
   categories: string[] = [];
 
-  // Filtering
+
   selectedCategory = '';
   searchTerm = '';
   maxPrice = 1000;
   currentMaxPrice = 1000;
 
-  // Pagination
+
   page = 1;
   pageSize = 6;
   total = 0;
 
-  // Sorting
+
   selectedSort = 'newest';
 
-  // Responsive sidebar
+
   isSidebarOpen = false;
   isMobile = false;
 
@@ -145,7 +145,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
       return matchesCategory && matchesSearch && matchesPrice;
     });
 
-    // Apply sorting
+
     this.sortProducts();
 
     this.total = this.filteredProducts.length;
@@ -168,7 +168,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
         break;
       case 'newest':
       default:
-        // Keep original order (newest first based on ID)
+
         this.filteredProducts.sort((a, b) => b.id - a.id);
         break;
     }

@@ -2,15 +2,12 @@
   <div *ngIf="loading" class="spinner-container">
     <div class="spinner"></div>
   </div>
-
   <div *ngIf="!loading" class="fade-in checkout-content">
     <div class="checkout-header">
       <h1><i class="fa-solid fa-credit-card"></i> Checkout</h1>
       <p>Complete your purchase securely</p>
     </div>
-
     <div class="checkout-grid">
-      <!-- Checkout Form -->
       <div class="checkout-form-section">
         <div class="form-section">
           <h3><i class="fa-solid fa-user"></i> Personal Information</h3>
@@ -53,7 +50,6 @@
             />
           </div>
         </div>
-
         <div class="form-section">
           <h3><i class="fa-solid fa-map-marker-alt"></i> Shipping Address</h3>
           <div class="form-group">
@@ -107,7 +103,6 @@
             </div>
           </div>
         </div>
-
         <div class="form-section">
           <h3><i class="fa-solid fa-credit-card"></i> Payment Information</h3>
           <div class="form-group">
@@ -150,12 +145,9 @@
           </div>
         </div>
       </div>
-
-      <!-- Order Summary -->
       <div class="order-summary-section">
         <div class="order-summary">
           <h3><i class="fa-solid fa-receipt"></i> Order Summary</h3>
-
           <div class="order-items">
             <div class="order-item" *ngFor="let item of [1, 2, 3]">
               <div class="item-info">
@@ -172,7 +164,6 @@
               <div class="item-price">$199.99</div>
             </div>
           </div>
-
           <div class="order-totals">
             <div class="total-row">
               <span>Subtotal</span>
@@ -192,7 +183,6 @@
               <span>$644.97</span>
             </div>
           </div>
-
           <div class="shipping-options">
             <h4><i class="fa-solid fa-truck"></i> Shipping Options</h4>
             <div class="shipping-option">
@@ -218,12 +208,10 @@
               </label>
             </div>
           </div>
-
           <button class="place-order-btn">
             <i class="fa-solid fa-lock"></i>
             Place Order - $644.97
           </button>
-
           <div class="security-notice">
             <i class="fa-solid fa-shield-alt"></i>
             <span>Your payment information is secure and encrypted</span>

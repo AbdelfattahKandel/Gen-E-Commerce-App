@@ -43,8 +43,6 @@
           cartItemCount
         }}</span>
       </a>
-
-      <!-- User Menu -->
       <div *ngIf="isAuthenticated()" class="user-menu">
         <div class="user-info">
           <i class="fa-solid fa-user-circle"></i>
@@ -65,8 +63,6 @@
           </button>
         </div>
       </div>
-
-      <!-- Auth Buttons -->
       <div *ngIf="!isAuthenticated()" class="auth-buttons">
         <a routerLink="/login" class="btn btn-outline hide-on-mobile">
           <i class="fa-solid fa-sign-in-alt"></i>
@@ -77,7 +73,6 @@
           Sign Up
         </a>
       </div>
-
       <button
         class="menu-btn"
         [class.open]="showMobileNav"
@@ -89,7 +84,6 @@
       </button>
     </div>
   </div>
-  <!-- Mobile Navigation Drawer -->
   <div class="mobile-nav" [class.active]="showMobileNav">
     <div class="mobile-nav-content">
       <button
@@ -124,8 +118,6 @@
           cartItemCount
         }}</span>
       </a>
-
-      <!-- Mobile User Menu -->
       <div *ngIf="isAuthenticated()" class="mobile-user-menu">
         <div class="user-info">
           <i class="fa-solid fa-user-circle"></i>
@@ -144,8 +136,6 @@
           <i class="fa-solid fa-sign-out-alt"></i> Logout
         </button>
       </div>
-
-      <!-- Mobile Auth Buttons -->
       <div *ngIf="!isAuthenticated()" class="mobile-auth-buttons">
         <a
           routerLink="/login"

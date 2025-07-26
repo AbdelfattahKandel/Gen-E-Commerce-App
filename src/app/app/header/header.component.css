@@ -1,4 +1,3 @@
-/* الأساسيات */
 .header-main {
   width: 100%;
   position: sticky;
@@ -43,7 +42,6 @@
   color: var(--primary, #2563eb);
   letter-spacing: 0.03em;
 }
-
 .nav-desktop {
   display: flex;
   gap: 2rem;
@@ -87,19 +85,15 @@
 .nav-desktop a.active::after {
   opacity: 1;
 }
-
 .nav-desktop a,
 .nav-desktop a.active,
 .nav-desktop a:hover {
   background: transparent !important;
 }
-
 .header-content {
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
 }
-
-/* Cart Count Styles */
 .cart-count {
   background: var(--primary, #2563eb);
   color: white;
@@ -113,14 +107,11 @@
   font-weight: bold;
   margin-left: 4px;
 }
-
-/* User Menu Styles */
 .user-menu {
   position: relative;
   display: flex;
   align-items: center;
 }
-
 .user-info {
   display: flex;
   align-items: center;
@@ -132,15 +123,12 @@
   background: rgba(37, 99, 235, 0.1);
   color: var(--primary, #2563eb);
 }
-
 .user-info:hover {
   background: rgba(37, 99, 235, 0.2);
 }
-
 .user-info i {
   font-size: 1.2rem;
 }
-
 .user-dropdown {
   position: absolute;
   top: 100%;
@@ -156,13 +144,11 @@
   transition: all 0.2s;
   z-index: 100;
 }
-
 .user-menu:hover .user-dropdown {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
 }
-
 .user-dropdown a,
 .user-dropdown button {
   display: flex;
@@ -178,12 +164,10 @@
   cursor: pointer;
   transition: background-color 0.2s;
 }
-
 .user-dropdown a:hover,
 .user-dropdown button:hover {
   background: #f3f4f6;
 }
-
 .logout-btn {
   width: 100%;
   padding: 0.75rem 1rem;
@@ -202,40 +186,31 @@
   font-size: 0.9rem;
   text-decoration: none;
 }
-
 .logout-btn:hover {
   background: rgba(239, 68, 68, 0.2);
   border-color: rgba(239, 68, 68, 0.5);
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
 }
-
 .logout-btn:active {
   transform: translateY(0);
 }
-
 .logout-btn i {
   font-size: 0.9rem;
 }
-
-/* Auth Buttons */
 .auth-buttons {
   display: flex;
   gap: 8px;
 }
-
-/* Mobile User Menu */
 .mobile-user-menu {
   margin-top: 16px;
   padding-top: 16px;
   border-top: 1px solid #e5e7eb;
 }
-
 .mobile-user-menu .user-info {
   margin-bottom: 12px;
   justify-content: center;
 }
-
 .mobile-user-menu .logout-btn {
   width: 100%;
   margin-top: 1rem;
@@ -253,75 +228,61 @@
   transition: all 0.3s ease;
   cursor: pointer;
 }
-
 .mobile-user-menu .logout-btn:hover {
   background: rgba(239, 68, 68, 0.2);
   border-color: rgba(239, 68, 68, 0.5);
   transform: translateY(-2px);
   box-shadow: 0 6px 16px rgba(239, 68, 68, 0.25);
 }
-
 .mobile-user-menu .logout-btn:active {
   transform: translateY(0);
 }
-
 .mobile-user-menu .logout-btn i {
   font-size: 1.1rem;
 }
-
 .mobile-auth-buttons {
   margin-top: 16px;
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
-
-/* Dark Mode Support */
 @media (prefers-color-scheme: dark) {
   .user-dropdown {
     background: #1f2937;
     border-color: #374151;
   }
-
   .user-dropdown a,
   .user-dropdown button {
     color: #d1d5db;
   }
-
   .user-dropdown a:hover,
   .user-dropdown button:hover {
     background: #374151;
   }
-
   .logout-btn {
     background: rgba(239, 68, 68, 0.15);
     border-color: rgba(239, 68, 68, 0.4);
     color: #fca5a5;
   }
-
   .logout-btn:hover {
     background: rgba(239, 68, 68, 0.25);
     border-color: rgba(239, 68, 68, 0.6);
     box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
   }
-
   .mobile-user-menu {
     border-top-color: #374151;
   }
-
   .mobile-user-menu .logout-btn {
     background: rgba(239, 68, 68, 0.15);
     border-color: rgba(239, 68, 68, 0.4);
     color: #fca5a5;
   }
-
   .mobile-user-menu .logout-btn:hover {
     background: rgba(239, 68, 68, 0.25);
     border-color: rgba(239, 68, 68, 0.6);
     box-shadow: 0 6px 16px rgba(239, 68, 68, 0.35);
   }
 }
-
 .header-actions {
   display: flex;
   align-items: center;
@@ -362,7 +323,6 @@
   box-shadow: 0 2px 8px 0 rgba(37, 99, 235, 0.1);
   transform: translateY(-2px) scale(1.04);
 }
-
 .cart-btn {
   background: transparent;
   border-radius: 50%;
@@ -407,7 +367,6 @@
   box-shadow: 0 1px 4px 0 rgba(37, 99, 235, 0.1);
   z-index: 2;
 }
-
 .menu-btn {
   background: transparent !important;
   border-radius: 50%;
@@ -458,7 +417,6 @@
   opacity: 1;
   transform: translate(-50%, -50%) scale(1) rotate(0deg);
 }
-
 .mobile-nav {
   display: none;
 }
@@ -569,13 +527,11 @@
   background: var(--primary, #2563eb);
   color: #fff;
 }
-
 .material-icons {
   font-size: 1.3em;
   vertical-align: middle;
   transition: color 0.18s;
 }
-
 @media (max-width: 900px) {
   .container.header-content {
     padding: 1rem 0.7rem;
@@ -604,7 +560,6 @@
     font-size: 1.2rem;
   }
 }
-
 .hide-on-mobile {
   display: inline-flex;
 }
@@ -613,7 +568,6 @@
     display: none !important;
   }
 }
-
 .mobile-nav-content .btn {
   opacity: 0;
   transform: translateY(12px);
@@ -636,10 +590,8 @@
   }
 }
 .mobile-nav.active .mobile-nav-content .btn {
-  /* Trigger animation only when nav is active */
   opacity: 1;
 }
-
 .btn.btn-outline,
 .btn.btn-primary {
   transition: background 0.28s cubic-bezier(0.4, 0, 0.2, 1),
@@ -651,7 +603,6 @@
 .btn.btn-primary:active {
   transition-delay: 0.13s;
 }
-
 .header-main,
 .nav-desktop a,
 .nav-desktop a.active,
@@ -661,7 +612,6 @@
 .nav-desktop a {
   cursor: pointer;
 }
-
 .mobile-nav-content a,
 .mobile-nav-content a.active,
 .mobile-nav-content a:hover,

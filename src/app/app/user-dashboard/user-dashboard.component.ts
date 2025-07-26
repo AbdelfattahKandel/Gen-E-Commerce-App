@@ -38,7 +38,7 @@ export class UserDashboardComponent implements OnInit {
   tab: 'overview' | 'orders' | 'wishlist' | 'profile' = 'overview';
   currentUser: User | null = null;
 
-  // User stats
+
   userStats: UserStats = {
     totalOrders: 0,
     totalSpent: 0,
@@ -46,13 +46,13 @@ export class UserDashboardComponent implements OnInit {
     reviews: 0,
   };
 
-  // User orders
+
   recentOrders: Order[] = [];
 
-  // Wishlist items (simulated for now)
+
   wishlistItems: WishlistItem[] = [];
 
-  // All user orders
+
   allOrders: Order[] = [];
 
   constructor(
@@ -66,7 +66,7 @@ export class UserDashboardComponent implements OnInit {
   ngOnInit() {
     this.loadingService.setLoadingState('user-dashboard', true);
 
-    // Get current user from localStorage
+
     const currentUserStr = localStorage.getItem('currentUser');
     if (currentUserStr) {
       this.currentUser = JSON.parse(currentUserStr);
@@ -75,7 +75,7 @@ export class UserDashboardComponent implements OnInit {
       }
     }
 
-    // Simulate loading time
+
     setTimeout(() => {
       this.loading = false;
       this.loadingService.setLoadingState('user-dashboard', false);
@@ -83,7 +83,7 @@ export class UserDashboardComponent implements OnInit {
   }
 
   private loadUserData(userId: number) {
-    // Load user orders
+
     this.userService.getUserOrders(userId).subscribe({
       next: (orders) => {
         this.allOrders = orders;
@@ -99,10 +99,10 @@ export class UserDashboardComponent implements OnInit {
       },
     });
 
-    // Load some products for wishlist simulation
+
     this.productService.getAllProducts().subscribe({
       next: (products) => {
-        // Simulate wishlist with first 5 products
+
         this.wishlistItems = products.slice(0, 5).map((product, index) => ({
           id: index + 1,
           name: product.title,
@@ -165,7 +165,7 @@ export class UserDashboardComponent implements OnInit {
   }
 
   addToCart(item: WishlistItem) {
-    // Find the product in the products list
+
     this.productService.getAllProducts().subscribe({
       next: (products) => {
         const product = products.find((p) => p.title === item.name);

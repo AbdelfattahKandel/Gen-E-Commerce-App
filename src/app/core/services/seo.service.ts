@@ -30,14 +30,11 @@ export class SeoService {
   updateSEO(data: Partial<SEOData>): void {
     const seoData = { ...this.defaultSEO, ...data };
 
-    // Update title
     this.title.setTitle(seoData.title);
 
-    // Update meta tags
     this.meta.updateTag({ name: 'description', content: seoData.description });
     this.meta.updateTag({ name: 'keywords', content: seoData.keywords || '' });
 
-    // Open Graph tags
     this.meta.updateTag({ property: 'og:title', content: seoData.title });
     this.meta.updateTag({
       property: 'og:description',
@@ -49,8 +46,6 @@ export class SeoService {
       property: 'og:type',
       content: seoData.type || 'website',
     });
-
-    // Twitter Card tags
     this.meta.updateTag({
       name: 'twitter:card',
       content: 'summary_large_image',
@@ -132,7 +127,7 @@ export class SeoService {
   }
 
   addStructuredData(data: any): void {
-    // Remove existing structured data
+
     const existingScript = document.querySelector(
       'script[type="application/ld+json"]'
     );
@@ -140,7 +135,7 @@ export class SeoService {
       existingScript.remove();
     }
 
-    // Add new structured data
+
     const script = document.createElement('script');
     script.type = 'application/ld+json';
     script.text = JSON.stringify(data);

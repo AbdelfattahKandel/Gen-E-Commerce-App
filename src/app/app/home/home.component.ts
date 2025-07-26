@@ -37,7 +37,6 @@ export class HomeComponent implements OnInit {
 
     this.productService.getAllProducts().subscribe({
       next: (products) => {
-        // Get first 4 products as featured
         this.featuredProducts = products.slice(0, 4);
         this.loading = false;
         this.loadingService.setLoadingState('home-products', false);

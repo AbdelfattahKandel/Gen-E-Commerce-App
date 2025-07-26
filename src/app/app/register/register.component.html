@@ -2,7 +2,6 @@
   <div *ngIf="loading" class="spinner-container">
     <div class="spinner"></div>
   </div>
-
   <div *ngIf="!loading" class="fade-in register-content">
     <div class="register-card">
       <div class="register-header">
@@ -12,7 +11,6 @@
         <h1>Create Account</h1>
         <p>Join us and start your shopping journey</p>
       </div>
-
       <form
         class="register-form"
         (ngSubmit)="onSubmit()"
@@ -34,7 +32,6 @@
               required
             />
           </div>
-
           <div class="form-group">
             <label for="lastName">
               <i class="fa-solid fa-user"></i>
@@ -51,7 +48,6 @@
             />
           </div>
         </div>
-
         <div class="form-group">
           <label for="username">
             <i class="fa-solid fa-at"></i>
@@ -67,7 +63,6 @@
             required
           />
         </div>
-
         <div class="form-group">
           <label for="email">
             <i class="fa-solid fa-envelope"></i>
@@ -83,7 +78,6 @@
             required
           />
         </div>
-
         <div class="form-group">
           <label for="phone">
             <i class="fa-solid fa-phone"></i>
@@ -98,7 +92,6 @@
             class="form-input"
           />
         </div>
-
         <div class="form-group">
           <label for="password">
             <i class="fa-solid fa-lock"></i>
@@ -127,7 +120,6 @@
             </button>
           </div>
         </div>
-
         <div class="form-group">
           <label for="confirmPassword">
             <i class="fa-solid fa-lock"></i>
@@ -158,7 +150,6 @@
             </button>
           </div>
         </div>
-
         <div class="form-options">
           <label class="checkbox-item">
             <input type="checkbox" required />
@@ -171,17 +162,14 @@
             <span class="label-text">Subscribe to newsletter</span>
           </label>
         </div>
-
         <button type="submit" class="register-btn" [disabled]="loading">
           <i class="fa-solid fa-user-plus"></i>
           {{ loading ? "Creating Account..." : "Create Account" }}
         </button>
       </form>
-
       <div class="register-divider">
         <span>or</span>
       </div>
-
       <div class="social-register">
         <button
           type="button"
@@ -200,7 +188,6 @@
           Sign up with Facebook
         </button>
       </div>
-
       <div class="register-footer">
         <p>
           Already have an account?

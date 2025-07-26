@@ -38,7 +38,7 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
   currentUser: User | null = null;
   private destroy$ = new Subject<void>();
 
-  // Dashboard stats
+
   stats: AdminStats = {
     totalUsers: 0,
     totalProducts: 0,
@@ -46,37 +46,37 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
     totalRevenue: 0,
   };
 
-  // Recent orders
+
   recentOrders: Order[] = [];
 
-  // Recent users
+
   recentUsers: User[] = [];
 
-  // All data for tabs
+
   allProducts: Product[] = [];
   allOrders: Order[] = [];
   allUsers: User[] = [];
 
-  // Filter states
+
   productFilter: string = 'all';
   orderFilter: string = 'all';
   userFilter: string = 'all';
 
-  // Search states
+
   productSearch: string = '';
   orderSearch: string = '';
   userSearch: string = '';
 
-  // Bulk selection states
+
   selectedProducts: Set<number> = new Set();
   selectedOrders: Set<number> = new Set();
   selectedUsers: Set<number> = new Set();
 
-  // Pagination states
+
   currentPage = 1;
   itemsPerPage = 12;
 
-  // Add Product Modal
+
   showAddProductModal = false;
   addProductForm!: FormGroup;
   newProduct = {
@@ -120,16 +120,16 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.loadingService.setLoadingState('admin-dashboard', true);
 
-    // Get current user from localStorage
+
     const currentUserStr = localStorage.getItem('currentUser');
     if (currentUserStr) {
       this.currentUser = JSON.parse(currentUserStr);
     }
 
-    // Load all data
+
     this.loadAllData();
 
-    // Simulate loading time
+
     setTimeout(() => {
       this.loading = false;
       this.loadingService.setLoadingState('admin-dashboard', false);
@@ -142,7 +142,7 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
   }
 
   private loadAllData() {
-    // Load all products
+
     this.productService
       .getAllProducts()
       .pipe(takeUntil(this.destroy$))
@@ -161,7 +161,7 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
         },
       });
 
-    // Load all orders
+
     this.userService
       .getAllOrders()
       .pipe(takeUntil(this.destroy$))
@@ -183,7 +183,7 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
         },
       });
 
-    // Load all users
+
     this.userService
       .getAllUsers()
       .pipe(takeUntil(this.destroy$))
@@ -212,11 +212,11 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
     this.clearSelections(); // Clear selections when changing tabs
   }
 
-  // Header Actions
+
   exportReport() {
     this.loadingService.setLoadingState('export', true);
 
-    // Simulate export process
+
     setTimeout(() => {
       this.loadingService.setLoadingState('export', false);
       this.errorService.addError(
@@ -230,7 +230,7 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
     this.showAddProductModal = true;
   }
 
-  // Product Actions
+
   editProduct(product: Product) {
     this.errorService.addError(`Editing product: ${product.title}`, 'info');
   }
@@ -261,7 +261,7 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
     this.errorService.addError(`Viewing product: ${product.title}`, 'info');
   }
 
-  // Bulk Product Actions
+
   selectProduct(productId: number, event: Event) {
     const checkbox = event.target as HTMLInputElement;
     if (checkbox.checked) {
@@ -295,7 +295,7 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
     ) {
       this.loadingService.setLoadingState('bulk-delete', true);
 
-      // Simulate bulk delete
+
       setTimeout(() => {
         this.allProducts = this.allProducts.filter(
           (product) => !this.selectedProducts.has(product.id)
@@ -311,7 +311,7 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
     }
   }
 
-  // Order Actions
+
   onStatusChange(event: Event, orderId: number) {
     const target = event.target as HTMLSelectElement;
     const newStatus = target.value as Order['status'];
@@ -323,7 +323,7 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
 
     this.userService.updateOrderStatus(orderId, newStatus).subscribe({
       next: (updatedOrder) => {
-        // Update the order in the list
+
         const orderIndex = this.allOrders.findIndex(
           (order) => order.id === orderId
         );
@@ -348,7 +348,7 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
     this.errorService.addError(`Viewing order #${order.id}`, 'info');
   }
 
-  // Bulk Order Actions
+
   selectOrder(orderId: number, event: Event) {
     const checkbox = event.target as HTMLInputElement;
     if (checkbox.checked) {
@@ -375,7 +375,7 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
 
     this.loadingService.setLoadingState('bulk-update', true);
 
-    // Simulate bulk update
+
     setTimeout(() => {
       this.allOrders.forEach((order) => {
         if (this.selectedOrders.has(order.id)) {
@@ -400,7 +400,7 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
     }
   }
 
-  // User Actions
+
   editUser(user: User) {
     this.errorService.addError(
       `Editing user: ${user.name.firstname} ${user.name.lastname}`,
@@ -436,7 +436,7 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
     );
   }
 
-  // Bulk User Actions
+
   selectUser(userId: number, event: Event) {
     const checkbox = event.target as HTMLInputElement;
     if (checkbox.checked) {
@@ -468,7 +468,7 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
     ) {
       this.loadingService.setLoadingState('bulk-delete-users', true);
 
-      // Simulate bulk delete
+
       setTimeout(() => {
         this.allUsers = this.allUsers.filter(
           (user) => !this.selectedUsers.has(user.id)
@@ -485,7 +485,7 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
     }
   }
 
-  // Filter Methods
+
   onProductFilterChange(event: Event) {
     const target = event.target as HTMLSelectElement;
     this.productFilter = target.value;
@@ -504,7 +504,7 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
     this.currentPage = 1;
   }
 
-  // Search Methods
+
   onProductSearch(event: Event) {
     const target = event.target as HTMLInputElement;
     this.productSearch = target.value;
@@ -523,7 +523,7 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
     this.currentPage = 1;
   }
 
-  // Pagination Methods
+
   nextPage() {
     const maxPages = Math.ceil(
       this.getCurrentFilteredData().length / this.itemsPerPage
@@ -548,7 +548,7 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
     }
   }
 
-  // Utility Methods
+
   private confirmAction(message: string): boolean {
     return confirm(message);
   }
@@ -572,7 +572,7 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
     }
   }
 
-  // Getter methods for filtered data
+
   get filteredProducts(): Product[] {
     let products = this.allProducts;
 
@@ -644,7 +644,7 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
     return users;
   }
 
-  // Paginated data getters
+
   get paginatedProducts(): Product[] {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
@@ -663,7 +663,7 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
     return this.filteredUsers.slice(startIndex, endIndex);
   }
 
-  // Pagination info getters
+
   get totalPages(): number {
     return Math.ceil(this.getCurrentFilteredData().length / this.itemsPerPage);
   }
@@ -726,7 +726,7 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
     }
   }
 
-  // Get user name by ID
+
   getUserName(userId: number): string {
     const user = this.allUsers.find((u) => u.id === userId);
     if (user) {
@@ -735,7 +735,7 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
     return `User ID: ${userId}`;
   }
 
-  // Add Product Modal Methods
+
   saveProduct() {
     if (this.addProductForm.invalid) {
       this.markFormGroupTouched();

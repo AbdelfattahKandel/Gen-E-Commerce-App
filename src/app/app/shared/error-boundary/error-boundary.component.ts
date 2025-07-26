@@ -219,12 +219,12 @@ export class ErrorBoundaryComponent {
 
   handleError(error: Error): void {
     console.error('Error caught by boundary:', error);
-    
+
     this.hasError = true;
     this.errorMessage = error.message || 'An unexpected error occurred';
     this.errorStack = error.stack || '';
-    
-    // Check if it's a chunk loading error
+
+
     if (error.message.includes('Failed to fetch dynamically imported module') || 
         error.message.includes('Loading chunk') ||
         error.message.includes('ChunkLoadFailed')) {
@@ -232,7 +232,7 @@ export class ErrorBoundaryComponent {
       this.showDetails = true;
     }
 
-    // Report error to error handler
+
     this.errorHandler.handleError(error);
   }
 
@@ -241,8 +241,8 @@ export class ErrorBoundaryComponent {
     this.errorMessage = '';
     this.errorStack = '';
     this.showDetails = false;
-    
-    // Reload the current route
+
+
     const currentUrl = this.router.url;
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
       this.router.navigateByUrl(currentUrl);
