@@ -2,6 +2,12 @@
 
 A simple e-commerce app made with Angular. This is my first big project so pls dont judge too hard 🤷‍♂️😃😃
 
+## 🌐 Live Demo
+
+**[View Live App](https://abdelfattahkandel.github.io/Gen-E-Commerce-App/)**
+
+The app is automatically deployed to GitHub Pages and updates whenever changes are pushed to the main branch.
+
 ## What it does
 
 - Users can browse products
@@ -16,6 +22,20 @@ A simple e-commerce app made with Angular. This is my first big project so pls d
 2. Run `npm install` to get all the packages
 3. Run `ng serve` to start the development server
 4. Open http://localhost:4200 in your browser
+
+## 🚀 Deployment
+
+### Manual Deployment
+
+To deploy manually to GitHub Pages:
+
+```bash
+npm run deploy
+```
+
+### Automatic Deployment
+
+The app is automatically deployed to GitHub Pages via GitHub Actions whenever changes are pushed to the main branch.
 
 ## Features
 
@@ -39,15 +59,11 @@ A simple e-commerce app made with Angular. This is my first big project so pls d
 - Email: tarekuser@gen.eg, Password: user123
 - Email: aliuser@gen.eg, Password: user123
 
-
 - Angular 17
 - TypeScript
 - CSS for styling
 - Local storage for data
 - Fake API for products
-
-
-
 
 ## Future plans
 
@@ -62,5 +78,5 @@ If you find any bugs or have suggestions, pls let me know!
 
 ---
 
-_Made with Abdelfattah  and lots of coffee ☕_
+_Made with Abdelfattah and lots of coffee ☕_
 _Peace Ya Man!_
