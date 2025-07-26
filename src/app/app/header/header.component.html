@@ -16,6 +16,50 @@
         <i class="fa-solid fa-store"></i>
         Products
       </a>
+
+      <!-- Search Bar -->
+      <div class="search-container">
+        <div class="search-box">
+          <i class="fa-solid fa-search search-icon"></i>
+          <input
+            type="text"
+            placeholder="Search products..."
+            class="search-input"
+            [(ngModel)]="searchQuery"
+            (keyup.enter)="onSearch()"
+            (input)="onSearchInput()"
+          />
+          <button
+            *ngIf="searchQuery"
+            (click)="clearSearch()"
+            class="clear-search"
+            aria-label="Clear search"
+          >
+            <i class="fa-solid fa-times"></i>
+          </button>
+        </div>
+        <div
+          *ngIf="showSearchResults && searchResults.length > 0"
+          class="search-results"
+        >
+          <div
+            *ngFor="let product of searchResults.slice(0, 5)"
+            class="search-result-item"
+            (click)="selectProduct(product)"
+          >
+            <img
+              [src]="product.image"
+              [alt]="product.title"
+              class="search-result-image"
+            />
+            <div class="search-result-info">
+              <div class="search-result-title">{{ product.title }}</div>
+              <div class="search-result-price">${{ product.price }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <a routerLink="/cart" routerLinkActive="active">
         <i class="fa-solid fa-cart-shopping"></i>
         Cart
@@ -122,8 +166,8 @@
         <div class="user-info">
           <i class="fa-solid fa-user-circle"></i>
           <span
-            >{{ currentUser?.name?.firstname || 'User' }}
-            {{ currentUser?.name?.lastname || '' }}</span
+            >{{ currentUser?.name?.firstname || "User" }}
+            {{ currentUser?.name?.lastname || "" }}</span
           >
         </div>
         <a routerLink="/dashboard" (click)="closeMobileNav()">

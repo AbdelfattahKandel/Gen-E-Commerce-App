@@ -2,6 +2,20 @@
   <div *ngIf="loading" class="spinner-container">
     <div class="spinner"></div>
     <p>Loading amazing products...</p>
+
+    <!-- Loading Skeleton -->
+    <div class="skeleton-container">
+      <div class="skeleton-grid">
+        <div *ngFor="let item of [1, 2, 3, 4]" class="skeleton-card">
+          <div class="skeleton-image"></div>
+          <div class="skeleton-content">
+            <div class="skeleton-title"></div>
+            <div class="skeleton-text"></div>
+            <div class="skeleton-price"></div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div *ngIf="error && !loading" class="error-container">
@@ -81,3 +95,13 @@
     </section>
   </div>
 </div>
+
+<!-- Floating Action Button -->
+<button
+  *ngIf="showScrollTop"
+  (click)="scrollToTop()"
+  class="scroll-top-btn"
+  title="Back to top"
+>
+  <i class="fa-solid fa-arrow-up"></i>
+</button>
